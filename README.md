@@ -9,6 +9,9 @@ git clone https://github.com/lena-will/GDP-nowcasting.git
 ## Introduction
 This repository holds the code for my seminar project on GDP nowcasting using Google Trends Data.
 
+## Data Sources
+
+
 ## References
 (1) Ferrara, Laurent and Simoni, Anna (2022). "When are Google Data Useful to Nowcast GDP? An Approach via Preselection and Shrinkage". In: Journal of Business & Economic Statistics, Vol. 00, No. 0, pp. 1–15.
 
