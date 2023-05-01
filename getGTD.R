@@ -34,10 +34,12 @@ for(ii in category_id) {
     mutate(hits = replace(hits, hits == "<1", 0)) %>% 
     mutate(hits = as.integer(hits))
   GTD <- bind_rows(GTD, GTD_tmp)
-  Sys.sleep(runif(1, min = 0.3, max = 1))
+  Sys.sleep(runif(1, min = 0.5, max = 2))
   print(counter)
   counter = counter + 1
 }
 
 GTD <- GTD %>% 
   pivot_wider(names_from = name, values_from = hits)
+
+write.csv(GTD, "/Users/lena/Git/GDP-nowcasting/gtd_categories.csv", row.names = FALSE)
