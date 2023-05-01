@@ -10,7 +10,7 @@ git clone https://github.com/lena-will/GDP-nowcasting.git
 This repository holds the code for my seminar project on GDP nowcasting using Google Trends Data.
 
 ## Data Sources
-+ Google Trends Data scraped via the ```gtrendsR``` function (find code in ```getGTD.R```)
++ Google Trends Data scraped via the ```gtrendsR``` function (find code in ```getGTD.R``` and data in ```gtd_categories.csv```)
 + FRED-MD Macro Data (see  https://research.stlouisfed.org/econ/mccracken/fred-databases/)
 
 
