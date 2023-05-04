@@ -7,7 +7,7 @@ git clone https://github.com/lena-will/GDP-nowcasting.git
 ```
 
 ## Introduction
-This repository holds the code for my seminar project on GDP nowcasting using Google Trends Data.
+This repository holds the code for my seminar project on GDP nowcasting using Google Trends Data. It mainly follows Ferrara and Simoni (2022) with an additional comparison to the elastic net estimator (Zou and Hastie (2005)).
 
 ## Data Sources
 + Google Trends Data scraped via the ```gtrendsR``` function (find code in ```getGTD.R``` and data in ```gtd_categories.csv```)
