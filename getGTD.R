@@ -42,4 +42,8 @@ for(ii in category_id) {
 GTD <- GTD %>% 
   pivot_wider(names_from = name, values_from = hits)
 
+## Save data
+
 write.csv(GTD, "/Users/lena/Git/GDP-nowcasting/gtd_categories.csv", row.names = FALSE)
+
+df_gtd <- data.table::fread("/Users/lena/Git/GDP-nowcasting/gtd_categories.csv") #testing
