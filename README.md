@@ -11,8 +11,10 @@ This repository holds the code for my seminar project on GDP nowcasting using Go
 
 ## Data Sources
 + Google Trends Data scraped via the ```gtrendsR``` function (find code in ```getGTD.R``` and data in ```gtd_categories.csv```)
-+ FRED-MD Macro Data (see  https://research.stlouisfed.org/econ/mccracken/fred-databases/)
-
++ For convenience, macro data for Germany is summarised in ```macro_data.xlsx```. The data sources are respectively:
+  + [Quarterly GDP](https://www-genesis.destatis.de/genesis//online?operation=table&code=81000-0002&bypass=true&levelindex=1&levelid=1685634675885#abreadcrumb)
+  + [IP Index](https://www-genesis.destatis.de/genesis//online?operation=table&code=42153-0001&bypass=true&levelindex=0&levelid=1685634299865#abreadcrumb) (specifically: Produktion im produzierenden Gewerbe ohne Bau)
+  + [ESI Index](https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/business-and-consumer-surveys/download-business-and-consumer-survey-data/time-series_en)
 
 ## References
 (1) Ferrara, Laurent and Simoni, Anna (2022). "When are Google Data Useful to Nowcast GDP? An Approach via Preselection and Shrinkage". In: Journal of Business & Economic Statistics, Vol. 00, No. 0, pp. 1–15.
