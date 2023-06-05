@@ -10,6 +10,7 @@ git clone https://github.com/lena-will/GDP-nowcasting.git
 This repository holds the code for my seminar project on GDP nowcasting using Google Trends Data. It mainly follows Ferrara and Simoni (2022) with an additional comparison to the elastic net estimator (Zou and Hastie (2005)).
 
 ## Data Sources
+Data and scripts to get data can be found in the ```Data prep``` folder.
 + Google Trends Data scraped via the ```gtrendsR``` function (find code in ```getGTD.R``` and data in ```gtd_categories.csv```)
 + For convenience, macro data for Germany is summarised in ```macro_data.xlsx```. The data sources are respectively:
   + [Quarterly GDP](https://www-genesis.destatis.de/genesis//online?operation=table&code=81000-0002&bypass=true&levelindex=1&levelid=1685634675885#abreadcrumb)
