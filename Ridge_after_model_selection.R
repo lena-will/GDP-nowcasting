@@ -1,8 +1,8 @@
-## Housekeeping
+## Housekeeping ----------------------------------------------------------------
 library(tidyverse)
 library(zoo)
 
-## Load data
+## Load data -------------------------------------------------------------------
 
 gtd_data <- read_csv("Data prep/gtd_germany.csv")
 gdp <-
@@ -18,7 +18,10 @@ esi <-
   readxl::read_xlsx("Data prep/macro_data.xlsx", sheet = "DE ESI") %>%
   filter(Month >= "2004-01-01")
 
-## Preselection
+## Preselection ----------------------------------------------------------------
+
+source("fun_preselection.R")
+source("fun_z_scores.R")
 
 gtd_pre <- gtd_data %>%
   group_by(date = format(as.yearqtr(date, "%b-%Y"), "%YQ%q")) %>%
@@ -38,31 +41,73 @@ esi_pre <- esi %>%
   rename(quarter_average = Month) %>%
   filter(quarter_average != "2023Q2")
 
-z_scores <- function(x){
-  (x-mean(x))/sd(x)
-}
+# Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
 
-t_stat <- NULL
-y <- gdp$gdp
-for (ii in 2:length(gtd_pre)){
-  gtd_keyword <- gtd_pre[,c(1,ii)]
-  X <- esi_pre %>% 
-    left_join(ip_pre) %>% 
-    left_join(gtd_keyword) %>% 
-    select(-quarter_average)
-  X <- as.data.frame(apply(X, 2, z_scores))
-  X <- X %>% 
-    mutate(intercept = 1, .before = ESI)
-  X <- as.matrix(X)
-  beta_hat <- solve(t(X)%*%X)%*%t(X)%*%y
-  sigma_hat <- t(y - X%*%beta_hat)%*%(y - X%*%beta_hat)/(nrow(X) - ncol(X))
-  inv_X <- solve(t(X)%*%X)
-  t_stat_tmp <- abs(beta_hat[4,1]/sqrt(sigma_hat%*%inv_X[4,4]))
-  t_stat_tmp <- as.data.frame(t_stat_tmp) 
-  t_stat <- bind_rows(t_stat, t_stat_tmp)
-}
+gdp_p1 <- gdp %>% 
+  filter(Quarter >= "2005-03-01" & Quarter < "2007-12-01") %>% 
+  select(gdp)
 
-t_stat_ordered <- t_stat %>% 
-  mutate(keyword = colnames(gtd_pre)[2:ncol(gtd_pre)]) %>% 
-  rename(t_stat = V1) %>% 
-  arrange(desc(t_stat))
+gtd_pre_p1 <- gtd_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
+
+ip_pre_p1 <- ip_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
+
+esi_pre_p1 <- esi_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
+  
+preselection_p1 <- preselection(gdp_p1, gtd_pre_p1, esi_pre_p1, ip_pre_p1)
+
+# Period 2: Cyclical Stability - trainings sample: 2005Q1-2013Q3 ---------------
+
+gdp_p2 <- gdp %>% 
+  filter(Quarter >= "2005-03-01" & Quarter < "2013-12-01") %>% 
+  select(gdp)
+
+gtd_pre_p2 <- gtd_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
+
+ip_pre_p2 <- ip_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
+
+esi_pre_p2 <- esi_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
+
+preselection_p2 <- preselection(gdp_p2, gtd_pre_p2, esi_pre_p2, ip_pre_p2)
+
+# Period 3: Sharp Downturn - trainings sample: 2005Q1-2016Q3
+
+gdp_p3 <- gdp %>% 
+  filter(Quarter >= "2005-03-01" & Quarter < "2016-12-01") %>% 
+  select(gdp)
+
+gtd_pre_p3 <- gtd_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
+
+ip_pre_p3 <- ip_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
+
+esi_pre_p3 <- esi_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
+
+preselection_p3 <- preselection(gdp_p3, gtd_pre_p3, esi_pre_p3, ip_pre_p3)
+
+# Period 4: High Volatility - trainings sample: 2005Q1-2021Q2
+
+gdp_p4 <- gdp %>% 
+  filter(Quarter >= "2005-03-01" & Quarter < "2021-09-01") %>% 
+  select(gdp)
+
+gtd_pre_p4 <- gtd_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2021Q2")
+
+ip_pre_p4 <- ip_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2021Q2")
+
+esi_pre_p4 <- esi_pre %>% 
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2021Q2")
+
+preselection_p4 <- preselection(gdp_p4, gtd_pre_p4, esi_pre_p4, ip_pre_p4)
+
+
+
