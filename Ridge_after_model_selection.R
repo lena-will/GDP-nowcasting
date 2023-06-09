@@ -92,7 +92,7 @@ esi_pre_p3 <- esi_pre %>%
 
 preselection_p3 <- preselection(gdp_p3, gtd_pre_p3, esi_pre_p3, ip_pre_p3)
 
-# Period 4: High Volatility - trainings sample: 2005Q1-2021Q2
+# Period 4: COVID-19 - trainings sample: 2005Q1-2021Q2
 
 gdp_p4 <- gdp %>% 
   filter(Quarter >= "2005-03-01" & Quarter < "2021-09-01") %>% 
