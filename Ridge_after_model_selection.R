@@ -33,7 +33,7 @@ ip_pre <- ip %>%
   group_by(Month = format(as.yearqtr(Month, "%b-%Y"), "%YQ%q")) %>%
   summarise_all(mean) %>%
   rename(quarter_average = Month) %>% 
-  select(-ip_abs)
+  select(quarter_average, ip_mom)
 
 esi_pre <- esi %>%
   group_by(Month = format(as.yearqtr(Month, "%b-%Y"), "%YQ%q")) %>%
@@ -58,6 +58,15 @@ esi_pre_p1 <- esi_pre %>%
   
 preselection_p1 <- preselection(gdp_p1, gtd_pre_p1, esi_pre_p1, ip_pre_p1)
 
+gtd_choice_p1 <- preselection_p1 %>% 
+  mutate(tau = case_when(t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
+                         t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
+                         t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
+                         t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
+                         t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
+                         t_stat >= 2.81 ~ 0.005)) %>% 
+  filter(!is.na(tau))
+
 # Period 2: Cyclical Stability - trainings sample: 2005Q1-2013Q3 ---------------
 
 gdp_p2 <- gdp %>% 
@@ -74,6 +83,15 @@ esi_pre_p2 <- esi_pre %>%
   filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
 
 preselection_p2 <- preselection(gdp_p2, gtd_pre_p2, esi_pre_p2, ip_pre_p2)
+
+gtd_choice_p2 <- preselection_p2 %>% 
+  mutate(tau = case_when(t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
+                         t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
+                         t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
+                         t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
+                         t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
+                         t_stat >= 2.81 ~ 0.005)) %>% 
+  filter(!is.na(tau))
 
 # Period 3: Sharp Downturn - trainings sample: 2005Q1-2016Q3
 
@@ -92,6 +110,15 @@ esi_pre_p3 <- esi_pre %>%
 
 preselection_p3 <- preselection(gdp_p3, gtd_pre_p3, esi_pre_p3, ip_pre_p3)
 
+gtd_choice_p3 <- preselection_p3 %>% 
+  mutate(tau = case_when(t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
+                         t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
+                         t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
+                         t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
+                         t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
+                         t_stat >= 2.81 ~ 0.005)) %>% 
+  filter(!is.na(tau))
+
 # Period 4: COVID-19 - trainings sample: 2005Q1-2021Q2
 
 gdp_p4 <- gdp %>% 
@@ -108,6 +135,16 @@ esi_pre_p4 <- esi_pre %>%
   filter(quarter_average >= "2005Q1" & quarter_average <= "2021Q2")
 
 preselection_p4 <- preselection(gdp_p4, gtd_pre_p4, esi_pre_p4, ip_pre_p4)
+
+gtd_choice_p4 <- preselection_p4 %>% 
+  mutate(tau = case_when(t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
+                         t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
+                         t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
+                         t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
+                         t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
+                         t_stat >= 2.81 ~ 0.005)) %>% 
+  filter(!is.na(tau))
+
 
 
 
