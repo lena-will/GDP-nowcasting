@@ -21,8 +21,8 @@ esi <-
 
 ## Preselection ----------------------------------------------------------------
 
-source("fun_preselection.R")
-source("fun_z_scores.R")
+source("functions/fun_preselection.R")
+source("functions/fun_z_scores.R")
 
 gtd_pre <- gtd_data %>%
   group_by(date = format(as.yearqtr(date, "%b-%Y"), "%YQ%q")) %>%
@@ -220,7 +220,7 @@ ip_bridge <- ip %>%
 
 # GTD Period 1
 
-source("fun_bridge_gtd.R")
+source("functions/fun_bridge_gtd.R")
 
 gtd_choice_p1_var <- gtd_choice_p1$keyword
 
@@ -291,18 +291,18 @@ rm(gtd_bridge_p4_prep, skip_p4, gtd_choice_p4, gtd_choice_p4_var)
 
 # Model 1 (First month of a quarter)
 
-source("fun_model_m1.R")
+source("functions/fun_model_m1.R")
 
 min_date <- "2005-01-01"
 max_date <- "2007-10-01"
 
 # Model 2 (Second month of a quarter)
 
-source("fun_model_m2.R")
+source("functions/fun_model_m2.R")
 
 # Model 3 (Third month of a quarter)
 
-source("fun_model_m3.R")
+source("functions/fun_model_m3.R")
 
 
 
