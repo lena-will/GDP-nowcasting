@@ -17,4 +17,5 @@ bridge_data <- function(prep_data, data) {
       }
     }
   }
+  data <- data
 }
