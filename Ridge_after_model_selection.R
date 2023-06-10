@@ -179,8 +179,6 @@ rm(preselection_p1,
 
 ## Prep data for bridge equations ----------------------------------------------
 
-source("fun_bridge_data.R")
-
 # GDP
 
 y_ridge <- gdp
@@ -222,6 +220,8 @@ ip_bridge <- ip %>%
 
 # GTD Period 1
 
+source("fun_bridge_gtd.R")
+
 gtd_choice_p1_var <- gtd_choice_p1$keyword
 
 gtd_bridge_p1_prep <- gtd_data %>%
@@ -232,30 +232,8 @@ gtd_bridge_p1 <- gtd_bridge_p1_prep %>%
     2:ncol(gtd_bridge_p1_prep)
   )), ~ ., .names = "{col}_b"))
 
-skip_p1 <- ncol(gtd_bridge_p1_prep) - 1
+gtd_bridge_p1 <- bridge_gtd(gtd_bridge_p1_prep, gtd_bridge_p1)
 
-for (j in 2:ncol(gtd_bridge_p1_prep)) {
-  for (ii in 1:nrow(gtd_bridge_p1)) {
-    if (month(gtd_bridge_p1$Month[ii]) == 1 |
-        month(gtd_bridge_p1$Month[ii]) == 4 |
-        month(gtd_bridge_p1$Month[ii]) == 7 |
-        month(gtd_bridge_p1$Month[ii]) == 10) {
-      gtd_bridge_p1[ii, j + skip_p1] = gtd_bridge_p1[ii, j]
-    } else if (month(gtd_bridge_p1$Month[ii]) == 2 |
-               month(gtd_bridge_p1$Month[ii]) == 5 |
-               month(gtd_bridge_p1$Month[ii]) == 8 |
-               month(gtd_bridge_p1$Month[ii]) == 11) {
-      gtd_bridge_p1[ii, j + skip_p1] = (gtd_bridge_p1[ii, j] + gtd_bridge_p1[ii -
-                                                                               1, j]) / 2
-    } else{
-      gtd_bridge_p1[ii, j + skip_p1] = (gtd_bridge_p1[ii, j] + gtd_bridge_p1[ii -
-                                                                               1, j] + gtd_bridge_p1[ii - 2, j]) / 3
-    }
-  }
-}
-
-gtd_bridge_p1 <- gtd_bridge_p1 %>%
-  select(c(Month, ends_with("_b")))
 rm(gtd_bridge_p1_prep, skip_p1, gtd_choice_p1, gtd_choice_p1_var)
 
 
@@ -271,30 +249,8 @@ gtd_bridge_p2 <- gtd_bridge_p2_prep %>%
     2:ncol(gtd_bridge_p2_prep)
   )), ~ ., .names = "{col}_b"))
 
-skip_p2 <- ncol(gtd_bridge_p2_prep) - 1
+gtd_bridge_p2 <- bridge_gtd(gtd_bridge_p2_prep, gtd_bridge_p2)
 
-for (j in 2:ncol(gtd_bridge_p2_prep)) {
-  for (ii in 1:nrow(gtd_bridge_p2)) {
-    if (month(gtd_bridge_p2$Month[ii]) == 1 |
-        month(gtd_bridge_p2$Month[ii]) == 4 |
-        month(gtd_bridge_p2$Month[ii]) == 7 |
-        month(gtd_bridge_p2$Month[ii]) == 10) {
-      gtd_bridge_p2[ii, j + skip_p2] = gtd_bridge_p2[ii, j]
-    } else if (month(gtd_bridge_p2$Month[ii]) == 2 |
-               month(gtd_bridge_p2$Month[ii]) == 5 |
-               month(gtd_bridge_p2$Month[ii]) == 8 |
-               month(gtd_bridge_p2$Month[ii]) == 11) {
-      gtd_bridge_p2[ii, j + skip_p2] = (gtd_bridge_p2[ii, j] + gtd_bridge_p2[ii -
-                                                                               1, j]) / 2
-    } else{
-      gtd_bridge_p2[ii, j + skip_p2] = (gtd_bridge_p2[ii, j] + gtd_bridge_p2[ii -
-                                                                               1, j] + gtd_bridge_p2[ii - 2, j]) / 3
-    }
-  }
-}
-
-gtd_bridge_p2 <- gtd_bridge_p2 %>%
-  select(c(Month, ends_with("_b")))
 rm(gtd_bridge_p2_prep, skip_p2, gtd_choice_p2, gtd_choice_p2_var)
 
 # GTD Period 3
@@ -309,30 +265,8 @@ gtd_bridge_p3 <- gtd_bridge_p3_prep %>%
     2:ncol(gtd_bridge_p3_prep)
   )), ~ ., .names = "{col}_b"))
 
-skip_p3 <- ncol(gtd_bridge_p3_prep) - 1
+gtd_bridge_p3 <- bridge_gtd(gtd_bridge_p3_prep, gtd_bridge_p3)
 
-for (j in 2:ncol(gtd_bridge_p3_prep)) {
-  for (ii in 1:nrow(gtd_bridge_p3)) {
-    if (month(gtd_bridge_p3$Month[ii]) == 1 |
-        month(gtd_bridge_p3$Month[ii]) == 4 |
-        month(gtd_bridge_p3$Month[ii]) == 7 |
-        month(gtd_bridge_p3$Month[ii]) == 10) {
-      gtd_bridge_p3[ii, j + skip_p3] = gtd_bridge_p3[ii, j]
-    } else if (month(gtd_bridge_p3$Month[ii]) == 2 |
-               month(gtd_bridge_p3$Month[ii]) == 5 |
-               month(gtd_bridge_p3$Month[ii]) == 8 |
-               month(gtd_bridge_p3$Month[ii]) == 11) {
-      gtd_bridge_p3[ii, j + skip_p3] = (gtd_bridge_p3[ii, j] + gtd_bridge_p3[ii -
-                                                                               1, j]) / 2
-    } else{
-      gtd_bridge_p3[ii, j + skip_p3] = (gtd_bridge_p3[ii, j] + gtd_bridge_p3[ii -
-                                                                               1, j] + gtd_bridge_p3[ii - 2, j]) / 3
-    }
-  }
-}
-
-gtd_bridge_p3 <- gtd_bridge_p3 %>%
-  select(c(Month, ends_with("_b")))
 rm(gtd_bridge_p3_prep, skip_p3, gtd_choice_p3, gtd_choice_p3_var)
 
 # GTD Period 4
@@ -347,30 +281,8 @@ gtd_bridge_p4 <- gtd_bridge_p4_prep %>%
     2:ncol(gtd_bridge_p4_prep)
   )), ~ ., .names = "{col}_b"))
 
-skip_p4 <- ncol(gtd_bridge_p4_prep) - 1
+gtd_bridge_p4 <- bridge_gtd(gtd_bridge_p4_prep, gtd_bridge_p4)
 
-for (j in 2:ncol(gtd_bridge_p4_prep)) {
-  for (ii in 1:nrow(gtd_bridge_p4)) {
-    if (month(gtd_bridge_p4$Month[ii]) == 1 |
-        month(gtd_bridge_p4$Month[ii]) == 4 |
-        month(gtd_bridge_p4$Month[ii]) == 7 |
-        month(gtd_bridge_p4$Month[ii]) == 10) {
-      gtd_bridge_p4[ii, j + skip_p4] = gtd_bridge_p4[ii, j]
-    } else if (month(gtd_bridge_p4$Month[ii]) == 2 |
-               month(gtd_bridge_p4$Month[ii]) == 5 |
-               month(gtd_bridge_p4$Month[ii]) == 8 |
-               month(gtd_bridge_p4$Month[ii]) == 11) {
-      gtd_bridge_p4[ii, j + skip_p4] = (gtd_bridge_p4[ii, j] + gtd_bridge_p4[ii -
-                                                                               1, j]) / 2
-    } else{
-      gtd_bridge_p4[ii, j + skip_p4] = (gtd_bridge_p4[ii, j] + gtd_bridge_p4[ii -
-                                                                               1, j] + gtd_bridge_p4[ii - 2, j]) / 3
-    }
-  }
-}
-
-gtd_bridge_p4 <- gtd_bridge_p4 %>%
-  select(c(Month, ends_with("_b")))
 rm(gtd_bridge_p4_prep, skip_p4, gtd_choice_p4, gtd_choice_p4_var)
 
 ## Step 2: Ridge Regression ----------------------------------------------------

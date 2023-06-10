@@ -1,4 +1,4 @@
-bridge_data <- function(prep_data, data) {
+bridge_gtd <- function(prep_data, data) {
   skip <- ncol(prep_data) - 1
   for (j in 2:ncol(prep_data)) {
     for (ii in 1:nrow(data)) {
@@ -17,5 +17,6 @@ bridge_data <- function(prep_data, data) {
       }
     }
   }
-  data <- data
+  data <- data %>%
+    select(c(Month, ends_with("_b")))
 }
