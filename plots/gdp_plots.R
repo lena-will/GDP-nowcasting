@@ -12,16 +12,17 @@ gdp <-
 ## GDP plots: QoQ growth -------------------------------------------------------
 
 p1_plot <- ggplot(gdp %>%
-                    filter(Quarter >= "2007-03-01" &
-                             Quarter <= "2009-12-01"),
+                    filter(Quarter >= "2006-12-01" &
+                             Quarter <= "2010-03-01"),
                   aes(x = Quarter, y = gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light() +
   geom_hline(yintercept = 0.0, color = "grey") +
   annotate("rect", fill = "grey", alpha = 0.5, 
            xmin = as.POSIXct("2008-01-01"), xmax = as.POSIXct("2009-04-01"),
-           ymin = -Inf, ymax = Inf)
+           ymin = -Inf, ymax = Inf) +
+  ylab("QoQ Growth")
   
 
 p2_plot <- ggplot(gdp %>%
@@ -29,40 +30,43 @@ p2_plot <- ggplot(gdp %>%
                              Quarter <= "2016-12-01"),
                   aes(x = Quarter, y = gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light() +
-  geom_hline(yintercept = 0.0, color = "grey")
+  geom_hline(yintercept = 0.0, color = "grey") +
+  ylab("QoQ Growth")
 
 p3_plot <- ggplot(gdp %>%
-                    filter(Quarter >= "2016-03-01" &
-                             Quarter <= "2019-12-01"),
+                    filter(Quarter >= "2015-12-01" &
+                             Quarter <= "2019-03-01"),
                   aes(x = Quarter, y = gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light() +
-  geom_hline(yintercept = 0.0, color = "grey")
+  geom_hline(yintercept = 0.0, color = "grey") +
+  ylab("QoQ Growth")
 
 p4_plot <- ggplot(gdp %>%
                     filter(Quarter >= "2018-03-01" &
                              Quarter <= "2021-12-01"),
                   aes(x = Quarter, y = gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light() +
   geom_hline(yintercept = 0.0, color = "grey") +
   annotate("rect", fill = "grey", alpha = 0.5, 
            xmin = as.POSIXct("2019-12-01"), xmax = as.POSIXct("2020-06-01"),
-           ymin = -Inf, ymax = Inf)
+           ymin = -Inf, ymax = Inf) +
+  ylab("QoQ Growth")
 
 ## GDP plots: log --------------------------------------------------------------
 
 
 p1_plot_log <- ggplot(gdp %>%
-                    filter(Quarter >= "2007-03-01" &
-                             Quarter <= "2009-12-01"),
+                    filter(Quarter >= "2006-12-01" &
+                             Quarter <= "2010-03-01"),
                   aes(x = Quarter, y = log_gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light() +
   annotate("rect", fill = "grey", alpha = 0.5, 
            xmin = as.POSIXct("2008-01-01"), xmax = as.POSIXct("2009-04-01"),
@@ -74,15 +78,15 @@ p2_plot_log <- ggplot(gdp %>%
                              Quarter <= "2016-12-01"),
                   aes(x = Quarter, y = log_gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light()
 
 p3_plot_log <- ggplot(gdp %>%
-                    filter(Quarter >= "2016-03-01" &
-                             Quarter <= "2019-12-01"),
+                    filter(Quarter >= "2015-03-01" &
+                             Quarter <= "2019-03-01"),
                   aes(x = Quarter, y = log_gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light()
 
 p4_plot_log <- ggplot(gdp %>%
@@ -90,7 +94,7 @@ p4_plot_log <- ggplot(gdp %>%
                              Quarter <= "2021-12-01"),
                   aes(x = Quarter, y = log_gdp)) +
   geom_line() +
-  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%YQ%q"), breaks = "6 months") +
+  scale_x_datetime(labels = function(x) zoo::format.yearqtr(x, "%yQ%q"), breaks = "6 months") +
   theme_light() +
   annotate("rect", fill = "grey", alpha = 0.5, 
            xmin = as.POSIXct("2019-12-01"), xmax = as.POSIXct("2020-06-01"),
