@@ -234,7 +234,7 @@ gtd_bridge_p1 <- gtd_bridge_p1_prep %>%
 
 gtd_bridge_p1 <- bridge_gtd(gtd_bridge_p1_prep, gtd_bridge_p1)
 
-rm(gtd_bridge_p1_prep, skip_p1, gtd_choice_p1, gtd_choice_p1_var)
+rm(gtd_bridge_p1_prep, gtd_choice_p1, gtd_choice_p1_var)
 
 
 # GTD Period 2
@@ -251,7 +251,7 @@ gtd_bridge_p2 <- gtd_bridge_p2_prep %>%
 
 gtd_bridge_p2 <- bridge_gtd(gtd_bridge_p2_prep, gtd_bridge_p2)
 
-rm(gtd_bridge_p2_prep, skip_p2, gtd_choice_p2, gtd_choice_p2_var)
+rm(gtd_bridge_p2_prep, gtd_choice_p2, gtd_choice_p2_var)
 
 # GTD Period 3
 
@@ -267,7 +267,7 @@ gtd_bridge_p3 <- gtd_bridge_p3_prep %>%
 
 gtd_bridge_p3 <- bridge_gtd(gtd_bridge_p3_prep, gtd_bridge_p3)
 
-rm(gtd_bridge_p3_prep, skip_p3, gtd_choice_p3, gtd_choice_p3_var)
+rm(gtd_bridge_p3_prep, gtd_choice_p3, gtd_choice_p3_var)
 
 # GTD Period 4
 
@@ -283,7 +283,7 @@ gtd_bridge_p4 <- gtd_bridge_p4_prep %>%
 
 gtd_bridge_p4 <- bridge_gtd(gtd_bridge_p4_prep, gtd_bridge_p4)
 
-rm(gtd_bridge_p4_prep, skip_p4, gtd_choice_p4, gtd_choice_p4_var)
+rm(gtd_bridge_p4_prep, gtd_choice_p4, gtd_choice_p4_var)
 
 ## Step 2: Ridge Regression ----------------------------------------------------
 
@@ -293,8 +293,66 @@ rm(gtd_bridge_p4_prep, skip_p4, gtd_choice_p4, gtd_choice_p4_var)
 
 source("functions/fun_model_m1.R")
 
-min_date <- "2005-01-01"
-max_date <- "2007-10-01"
+min_date_train <- "2005-01-01"
+max_date_train <- "2007-10-01"
+min_date_test <- 
+max_date_test <- 
+
+gtd_period <- gtd_bridge_p1
+
+# -----
+
+X_m1 <- esi_bridge %>% 
+  select(-ESI) %>% 
+  rename(esi = esi_b) %>% 
+  left_join(gtd_period, by = "Month") %>% 
+  filter(month(Month) == 1 | month(Month) == 4 | month(Month) == 7 | month(Month) == 10 )
+
+y_m1 <- y_ridge %>% 
+  filter(month(Month) == 1 | month(Month) == 4 | month(Month) == 7 | month(Month) == 10 )
+
+# training
+
+X_m1_train <- X_m1 %>% 
+  filter(Month >= min_date_train & Month < max_date_train) %>% 
+  select(-Month)
+y_m1_train <- y_m1 %>% 
+  filter(Month >= min_date_train & Month < max_date_train) %>% 
+  select(gdp)
+X_m1_train <- as.matrix(X_m1_train)
+y_m1_train <- as.matrix(y_m1_train)
+
+alpha_ini <- as.matrix(seq(from = 0.01, to = 1, length.out = 15))
+counter <- 0
+n <- nrow(y_m1)
+gcv <- c()
+alpha <- alpha_ini[5, 1]*n
+
+for(ii in 1:length(alpha_ini)){
+  ident <- diag(ncol(X_m1_train))
+  alpha <- alpha_ini[ii]*n
+  beta_hat_pls <- solve(t(X_m1_train)%*%X_m1_train + alpha*ident)%*%t(X_m1_train)%*%y_m1_train
+  y_hat_pls <- X_m1_train%*%beta_hat_pls
+  gcv[ii] <- (1/n)%*%t(y_m1_train - y_hat_pls)%*%(y_m1_train - y_hat_pls)/(1-sum(diag(X_m1_train%*%solve(t(X_m1_train)%*%X_m1_train + alpha*ident)%*%t(X_m1_train)))*(1/n))^2
+}
+
+gcv_min <- which(gcv == min(gcv))
+alpha_min <- alpha_ini[gcv_min]
+
+# testing
+
+X_m1_test <- X_m1 %>% 
+  filter(Month >= min_date_test & Month < max_date_test) %>% 
+  select(-Month)
+y_m1_test <- y_m1 %>% 
+  filter(Month >= min_date_test & Month < max_date_test) %>% 
+  select(gdp)
+X_m1_test <- as.matrix(X_m1_test)
+y_m1_test <- as.matrix(y_m1_test)
+
+
+
+
 
 # Model 2 (Second month of a quarter)
 
