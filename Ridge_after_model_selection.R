@@ -134,6 +134,13 @@ rm(gtd_pre, gtd_pre_p1, gtd_pre_p2, gtd_pre_p3, gtd_pre_p4)
 rm(ip_pre, ip_pre_p1, ip_pre_p2, ip_pre_p3, ip_pre_p4)
 rm(preselection_p1, preselection_p2, preselection_p3, preselection_p4)
 
+# Save data frames for table creation
+
+saveRDS(gtd_choice_p1, "tables/gtd_choice_p1.RDS")
+saveRDS(gtd_choice_p2, "tables/gtd_choice_p2.RDS")
+saveRDS(gtd_choice_p3, "tables/gtd_choice_p3.RDS")
+saveRDS(gtd_choice_p4, "tables/gtd_choice_p4.RDS")
+
 ## Prep data for bridge equations ----------------------------------------------
 
 # GDP

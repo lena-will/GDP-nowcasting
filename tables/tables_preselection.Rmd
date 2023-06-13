@@ -1,0 +1,23 @@
+---
+title: ""
+output: pdf_document
+date: ""
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+```
+
+
+```{r, echo=FALSE}
+
+table_p2 <- readRDS("tables/gtd_choice_p2.RDS") %>% 
+  mutate(tau = tau*100)
+
+kable(table_p2, format = "latex", row.names = FALSE)
+
+```
+
+
