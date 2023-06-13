@@ -61,16 +61,6 @@ preselection_p1 <-
   preselection(gdp_p1, gtd_pre_p1, esi_pre_p1, ip_pre_p1)
 
 gtd_choice_p1 <- preselection_p1 %>%
-  mutate(
-    tau = case_when(
-      t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
-      t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
-      t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
-      t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
-      t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
-      t_stat >= 2.81 ~ 0.005
-    )
-  ) %>%
   filter(!is.na(tau))
 
 # Period 2: Cyclical Stability - trainings sample: 2005Q1-2013Q3
@@ -92,16 +82,6 @@ preselection_p2 <-
   preselection(gdp_p2, gtd_pre_p2, esi_pre_p2, ip_pre_p2)
 
 gtd_choice_p2 <- preselection_p2 %>%
-  mutate(
-    tau = case_when(
-      t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
-      t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
-      t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
-      t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
-      t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
-      t_stat >= 2.81 ~ 0.005
-    )
-  ) %>%
   filter(!is.na(tau))
 
 # Period 3: Sharp Downturn - trainings sample: 2005Q1-2016Q3
@@ -123,16 +103,6 @@ preselection_p3 <-
   preselection(gdp_p3, gtd_pre_p3, esi_pre_p3, ip_pre_p3)
 
 gtd_choice_p3 <- preselection_p3 %>%
-  mutate(
-    tau = case_when(
-      t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
-      t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
-      t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
-      t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
-      t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
-      t_stat >= 2.81 ~ 0.005
-    )
-  ) %>%
   filter(!is.na(tau))
 
 # Period 4: COVID-19 - trainings sample: 2005Q1-2021Q2
@@ -154,16 +124,6 @@ preselection_p4 <-
   preselection(gdp_p4, gtd_pre_p4, esi_pre_p4, ip_pre_p4)
 
 gtd_choice_p4 <- preselection_p4 %>%
-  mutate(
-    tau = case_when(
-      t_stat >= 1.28 & t_stat < 1.645 ~ 0.2,
-      t_stat >= 1.645 & t_stat < 1.96 ~ 0.1,
-      t_stat >= 1.96 & t_stat < 2.24 ~ 0.05,
-      t_stat >= 2.24 & t_stat < 2.576 ~ 0.025,
-      t_stat >= 2.576 & t_stat < 2.81 ~ 0.01,
-      t_stat >= 2.81 ~ 0.005
-    )
-  ) %>%
   filter(!is.na(tau))
 
 # Finish preselection and prep for ridge regression
@@ -172,10 +132,7 @@ rm(esi_pre, esi_pre_p1, esi_pre_p2, esi_pre_p3, esi_pre_p4)
 rm(gdp_p1, gdp_p2, gdp_p3, gdp_p4)
 rm(gtd_pre, gtd_pre_p1, gtd_pre_p2, gtd_pre_p3, gtd_pre_p4)
 rm(ip_pre, ip_pre_p1, ip_pre_p2, ip_pre_p3, ip_pre_p4)
-rm(preselection_p1,
-   preselection_p2,
-   preselection_p3,
-   preselection_p4)
+rm(preselection_p1, preselection_p2, preselection_p3, preselection_p4)
 
 ## Prep data for bridge equations ----------------------------------------------
 

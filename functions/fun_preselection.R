@@ -23,4 +23,16 @@ preselection <- function(y, gtd_pre, esi_pre, ip_pre){
     mutate(keyword = colnames(gtd_pre)[2:ncol(gtd_pre)]) %>% 
     rename(t_stat = V1) %>% 
     arrange(desc(t_stat))
+  
+  category_choice <- t_stat_ordered %>%
+    mutate(
+      tau = case_when(
+        t_stat >= 0.8416 & t_stat < 1.2816 ~ 0.2,
+        t_stat >= 1.2816 & t_stat < 1.6449 ~ 0.1,
+        t_stat >= 1.6449 & t_stat < 1.96 ~ 0.05,
+        t_stat >= 1.96 & t_stat < 2.3263 ~ 0.025,
+        t_stat >= 2.3263 & t_stat < 2.5758 ~ 0.01,
+        t_stat >= 2.5758 ~ 0.005
+      )
+    )
 }
