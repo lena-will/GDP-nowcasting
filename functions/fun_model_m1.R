@@ -30,8 +30,8 @@ model_m1 <-
     
     alpha_ini <- as.matrix(seq(
       from = 0.01,
-      to = 1,
-      length.out = 15
+      to = 2,
+      length.out = 100
     ))
     n <- nrow(y_m1)
     gcv <- c()
@@ -63,4 +63,12 @@ model_m1 <-
       select(gdp)
     X_m1_test <- as.matrix(X_m1_test)
     y_m1_test <- as.matrix(y_m1_test)
+    
+    ident_test <- diag(ncol(X_m1_test))
+    beta_hat_oos <-
+      solve(t(X_m1_test) %*% X_m1_test + alpha_min * ident_test) %*% t(X_m1_test) %*%
+      y_m1_test
+    y_pred <- X_m1_train %*% beta_hat_pls
+    
+    
   }
