@@ -19,6 +19,29 @@ esi <-
   readxl::read_xlsx("Data prep/macro_data.xlsx", sheet = "DE ESI") %>%
   filter(Month >= "2004-01-01")
 
+# cut all data to same length as gdp data
+
+gdp_latest <- gdp %>% 
+  slice(n()) %>% 
+  select(Quarter)
+gdp_latest <- as.matrix(gdp_latest)
+
+gtd_data <- gtd_data %>% 
+  mutate(date = as.Date(date)) %>% 
+  filter(date <= gdp_latest)
+
+ip <- ip %>% 
+  mutate(Month = as.Date(Month)) %>% 
+  filter(Month <= gdp_latest)
+
+day(esi$Month) <- 1
+
+esi <- esi %>%
+  mutate(Month = as.Date(Month)) %>%
+  filter(Month <= gdp_latest)
+
+rm(gdp_latest)
+
 ## Preselection ----------------------------------------------------------------
 
 source("functions/fun_preselection.R")
@@ -145,19 +168,18 @@ saveRDS(gtd_choice_p4, "tables/gtd_choice_p4.RDS")
 
 # GDP
 
-y_ridge <- gdp
-y_ridge <- y_ridge %>%
+y_bridge <- gdp
+y_bridge <- y_bridge %>%
   select(c(Quarter, gdp)) %>%
-  slice(rep(1:nrow(y_ridge), each = 3))
-y_ridge$Month <- ip$Month
-y_ridge <- y_ridge %>%
+  slice(rep(1:nrow(y_bridge), each = 3))
+y_bridge$Month <- ip$Month
+y_bridge <- y_bridge %>%
   relocate(Month, .after = Quarter)
 
 # ESi
 
 esi_bridge <- esi %>%
   add_column(esi_b = NA)
-day(esi_bridge$Month) <- 1
 
 for (ii in 1:nrow(esi_bridge)) {
   if (month(esi_bridge$Month[ii]) == 1 |
@@ -175,6 +197,8 @@ for (ii in 1:nrow(esi_bridge)) {
                                                                                            2]) / 3
   }
 }
+
+
 
 # IP
 
@@ -253,83 +277,11 @@ rm(gtd_bridge_p4_prep, gtd_choice_p4, gtd_choice_p4_var)
 
 # Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
 
-# Model 1 (First month of a quarter)
-
+source("functions/fun_bridge_gtd.R")
 source("functions/fun_model_m1.R")
 
 min_date_train <- "2005-01-01"
-max_date_train <- "2007-10-01"
-min_date_test <- 
-max_date_test <- 
+min_date_test <- "2007-10-01"
+max_date_test <- "2009-04-01"
 
-gtd_period <- gtd_bridge_p1
-
-# -----
-
-X_m1 <- esi_bridge %>% 
-  select(-ESI) %>% 
-  rename(esi = esi_b) %>% 
-  left_join(gtd_period, by = "Month") %>% 
-  filter(month(Month) == 1 | month(Month) == 4 | month(Month) == 7 | month(Month) == 10 )
-
-y_m1 <- y_ridge %>% 
-  filter(month(Month) == 1 | month(Month) == 4 | month(Month) == 7 | month(Month) == 10 )
-
-# training
-
-X_m1_train <- X_m1 %>% 
-  filter(Month >= min_date_train & Month < max_date_train) %>% 
-  select(-Month)
-y_m1_train <- y_m1 %>% 
-  filter(Month >= min_date_train & Month < max_date_train) %>% 
-  select(gdp)
-X_m1_train <- as.matrix(X_m1_train)
-y_m1_train <- as.matrix(y_m1_train)
-
-alpha_ini <- as.matrix(seq(from = 0.01, to = 1, length.out = 15))
-counter <- 0
-n <- nrow(y_m1)
-gcv <- c()
-alpha <- alpha_ini[5, 1]*n
-
-for(ii in 1:length(alpha_ini)){
-  ident <- diag(ncol(X_m1_train))
-  alpha <- alpha_ini[ii]*n
-  beta_hat_pls <- solve(t(X_m1_train)%*%X_m1_train + alpha*ident)%*%t(X_m1_train)%*%y_m1_train
-  y_hat_pls <- X_m1_train%*%beta_hat_pls
-  gcv[ii] <- (1/n)%*%t(y_m1_train - y_hat_pls)%*%(y_m1_train - y_hat_pls)/(1-sum(diag(X_m1_train%*%solve(t(X_m1_train)%*%X_m1_train + alpha*ident)%*%t(X_m1_train)))*(1/n))^2
-}
-
-gcv_min <- which(gcv == min(gcv))
-alpha_min <- alpha_ini[gcv_min]
-
-# testing
-
-X_m1_test <- X_m1 %>% 
-  filter(Month >= min_date_test & Month < max_date_test) %>% 
-  select(-Month)
-y_m1_test <- y_m1 %>% 
-  filter(Month >= min_date_test & Month < max_date_test) %>% 
-  select(gdp)
-X_m1_test <- as.matrix(X_m1_test)
-y_m1_test <- as.matrix(y_m1_test)
-
-
-
-
-
-# Model 2 (Second month of a quarter)
-
-source("functions/fun_model_m2.R")
-
-# Model 3 (Third month of a quarter)
-
-source("functions/fun_model_m3.R")
-
-
-
-
-
-
-
-
+results_m1_p1 <- m1(gtd_choice_p1, gtd_data, esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)

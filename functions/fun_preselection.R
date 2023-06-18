@@ -27,6 +27,7 @@ preselection <- function(y, gtd_pre, esi_pre, ip_pre){
   category_choice <- t_stat_ordered %>%
     mutate(
       tau = case_when(
+        t_stat < 0.8416 ~ 1.0,
         t_stat >= 0.8416 & t_stat < 1.2816 ~ 0.2,
         t_stat >= 1.2816 & t_stat < 1.6449 ~ 0.1,
         t_stat >= 1.6449 & t_stat < 1.96 ~ 0.05,
