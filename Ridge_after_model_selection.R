@@ -21,17 +21,17 @@ esi <-
 
 # cut all data to same length as gdp data
 
-gdp_latest <- gdp %>% 
-  slice(n()) %>% 
+gdp_latest <- gdp %>%
+  slice(n()) %>%
   select(Quarter)
 gdp_latest <- as.matrix(gdp_latest)
 
-gtd_data <- gtd_data %>% 
-  mutate(date = as.Date(date)) %>% 
+gtd_data <- gtd_data %>%
+  mutate(date = as.Date(date)) %>%
   filter(date <= gdp_latest)
 
-ip <- ip %>% 
-  mutate(Month = as.Date(Month)) %>% 
+ip <- ip %>%
+  mutate(Month = as.Date(Month)) %>%
   filter(Month <= gdp_latest)
 
 day(esi$Month) <- 1
@@ -155,7 +155,10 @@ rm(esi_pre, esi_pre_p1, esi_pre_p2, esi_pre_p3, esi_pre_p4)
 rm(gdp_p1, gdp_p2, gdp_p3, gdp_p4)
 rm(gtd_pre, gtd_pre_p1, gtd_pre_p2, gtd_pre_p3, gtd_pre_p4)
 rm(ip_pre, ip_pre_p1, ip_pre_p2, ip_pre_p3, ip_pre_p4)
-rm(preselection_p1, preselection_p2, preselection_p3, preselection_p4)
+rm(preselection_p1,
+   preselection_p2,
+   preselection_p3,
+   preselection_p4)
 
 # Save data frames for table creation
 
@@ -206,82 +209,187 @@ ip_bridge <- ip %>%
   select(c(Month, ip_abs, ip_mom)) %>%
   mutate(ip_b = lag(ip_mom, n = 2))
 
-# GTD Period 1
-
-source("functions/fun_bridge_gtd.R")
-
-gtd_choice_p1_var <- gtd_choice_p1$keyword
-
-gtd_bridge_p1_prep <- gtd_data %>%
-  select(any_of(gtd_choice_p1_var)) %>%
-  mutate(Month = gtd_data$date, .before = 1)
-gtd_bridge_p1 <- gtd_bridge_p1_prep %>%
-  mutate(across(all_of(c(
-    2:ncol(gtd_bridge_p1_prep)
-  )), ~ ., .names = "{col}_b"))
-
-gtd_bridge_p1 <- bridge_gtd(gtd_bridge_p1_prep, gtd_bridge_p1)
-
-rm(gtd_bridge_p1_prep, gtd_choice_p1, gtd_choice_p1_var)
-
-
-# GTD Period 2
-
-gtd_choice_p2_var <- gtd_choice_p2$keyword
-
-gtd_bridge_p2_prep <- gtd_data %>%
-  select(any_of(gtd_choice_p2_var)) %>%
-  mutate(Month = gtd_data$date, .before = 1)
-gtd_bridge_p2 <- gtd_bridge_p2_prep %>%
-  mutate(across(all_of(c(
-    2:ncol(gtd_bridge_p2_prep)
-  )), ~ ., .names = "{col}_b"))
-
-gtd_bridge_p2 <- bridge_gtd(gtd_bridge_p2_prep, gtd_bridge_p2)
-
-rm(gtd_bridge_p2_prep, gtd_choice_p2, gtd_choice_p2_var)
-
-# GTD Period 3
-
-gtd_choice_p3_var <- gtd_choice_p3$keyword
-
-gtd_bridge_p3_prep <- gtd_data %>%
-  select(any_of(gtd_choice_p3_var)) %>%
-  mutate(Month = gtd_data$date, .before = 1)
-gtd_bridge_p3 <- gtd_bridge_p3_prep %>%
-  mutate(across(all_of(c(
-    2:ncol(gtd_bridge_p3_prep)
-  )), ~ ., .names = "{col}_b"))
-
-gtd_bridge_p3 <- bridge_gtd(gtd_bridge_p3_prep, gtd_bridge_p3)
-
-rm(gtd_bridge_p3_prep, gtd_choice_p3, gtd_choice_p3_var)
-
-# GTD Period 4
-
-gtd_choice_p4_var <- gtd_choice_p4$keyword
-
-gtd_bridge_p4_prep <- gtd_data %>%
-  select(any_of(gtd_choice_p4_var)) %>%
-  mutate(Month = gtd_data$date, .before = 1)
-gtd_bridge_p4 <- gtd_bridge_p4_prep %>%
-  mutate(across(all_of(c(
-    2:ncol(gtd_bridge_p4_prep)
-  )), ~ ., .names = "{col}_b"))
-
-gtd_bridge_p4 <- bridge_gtd(gtd_bridge_p4_prep, gtd_bridge_p4)
-
-rm(gtd_bridge_p4_prep, gtd_choice_p4, gtd_choice_p4_var)
+# # GTD Period 1
+#
+# source("functions/fun_bridge_gtd.R")
+#
+# gtd_choice_p1_var <- gtd_choice_p1$keyword
+#
+# gtd_bridge_p1_prep <- gtd_data %>%
+#   select(any_of(gtd_choice_p1_var)) %>%
+#   mutate(Month = gtd_data$date, .before = 1)
+# gtd_bridge_p1 <- gtd_bridge_p1_prep %>%
+#   mutate(across(all_of(c(
+#     2:ncol(gtd_bridge_p1_prep)
+#   )), ~ ., .names = "{col}_b"))
+#
+# gtd_bridge_p1 <- bridge_gtd(gtd_bridge_p1_prep, gtd_bridge_p1)
+#
+# rm(gtd_bridge_p1_prep, gtd_choice_p1, gtd_choice_p1_var)
+#
+#
+# # GTD Period 2
+#
+# gtd_choice_p2_var <- gtd_choice_p2$keyword
+#
+# gtd_bridge_p2_prep <- gtd_data %>%
+#   select(any_of(gtd_choice_p2_var)) %>%
+#   mutate(Month = gtd_data$date, .before = 1)
+# gtd_bridge_p2 <- gtd_bridge_p2_prep %>%
+#   mutate(across(all_of(c(
+#     2:ncol(gtd_bridge_p2_prep)
+#   )), ~ ., .names = "{col}_b"))
+#
+# gtd_bridge_p2 <- bridge_gtd(gtd_bridge_p2_prep, gtd_bridge_p2)
+#
+# rm(gtd_bridge_p2_prep, gtd_choice_p2, gtd_choice_p2_var)
+#
+# # GTD Period 3
+#
+# gtd_choice_p3_var <- gtd_choice_p3$keyword
+#
+# gtd_bridge_p3_prep <- gtd_data %>%
+#   select(any_of(gtd_choice_p3_var)) %>%
+#   mutate(Month = gtd_data$date, .before = 1)
+# gtd_bridge_p3 <- gtd_bridge_p3_prep %>%
+#   mutate(across(all_of(c(
+#     2:ncol(gtd_bridge_p3_prep)
+#   )), ~ ., .names = "{col}_b"))
+#
+# gtd_bridge_p3 <- bridge_gtd(gtd_bridge_p3_prep, gtd_bridge_p3)
+#
+# rm(gtd_bridge_p3_prep, gtd_choice_p3, gtd_choice_p3_var)
+#
+# # GTD Period 4
+#
+# gtd_choice_p4_var <- gtd_choice_p4$keyword
+#
+# gtd_bridge_p4_prep <- gtd_data %>%
+#   select(any_of(gtd_choice_p4_var)) %>%
+#   mutate(Month = gtd_data$date, .before = 1)
+# gtd_bridge_p4 <- gtd_bridge_p4_prep %>%
+#   mutate(across(all_of(c(
+#     2:ncol(gtd_bridge_p4_prep)
+#   )), ~ ., .names = "{col}_b"))
+#
+# gtd_bridge_p4 <- bridge_gtd(gtd_bridge_p4_prep, gtd_bridge_p4)
+#
+# rm(gtd_bridge_p4_prep, gtd_choice_p4, gtd_choice_p4_var)
 
 ## Step 2: Ridge Regression ----------------------------------------------------
 
-# Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
-
 source("functions/fun_bridge_gtd.R")
 source("functions/fun_model_m1.R")
+source("functions/fun_model_m2.R")
+
+# Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
 
 min_date_train <- "2005-01-01"
 min_date_test <- "2007-10-01"
 max_date_test <- "2009-04-01"
 
-results_m1_p1 <- m1(gtd_choice_p1, gtd_data, esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
+results_m1_p1 <-
+  m1(
+    gtd_choice_p1,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+results_m2_p1 <-
+  m2(
+    gtd_choice_p1,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+# Period 2: Cyclical stability - trainings sample: 2005Q1-2013Q3 ---------------
+
+min_date_train <- "2005-01-01"
+min_date_test <- "2013-10-01"
+max_date_test <- "2016-01-01"
+
+results_m1_p2 <-
+  m1(
+    gtd_choice_p2,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+results_m2_p2 <-
+  m2(
+    gtd_choice_p2,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+# Period 3: Sharp downturn - trainings sample: 2005Q1-2016Q3 -------------------
+
+min_date_train <- "2005-01-01"
+min_date_test <- "2017-01-01"
+max_date_test <- "2018-12-01"
+
+results_m1_p3 <-
+  m1(
+    gtd_choice_p3,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+results_m2_p3 <-
+  m2(
+    gtd_choice_p3,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+# Period 4: COVID-19 - trainings sample: 2005Q1-2019Q3 -------------------------
+
+min_date_train <- "2005-01-01"
+min_date_test <- "2019-12-01"
+max_date_test <- "2021-04-01"
+
+results_m1_p4 <-
+  m1(
+    gtd_choice_p4,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+results_m2_p4 <-
+  m2(
+    gtd_choice_p4,
+    gtd_data,
+    esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )

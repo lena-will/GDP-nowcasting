@@ -5,7 +5,7 @@ m1 <- function(gtd_choice_period,
                min_date_train,
                min_date_test,
                max_date_test) {
-  tau_options <- c(1, 0.2, 0.1, 0.05, 0.025, 0.01, 0.005)
+  tau_options <- unique(gtd_choice_period$tau)
   rmsfe <- c()
   
   for (tau_loop in 1:length(tau_options)) {
@@ -14,15 +14,15 @@ m1 <- function(gtd_choice_period,
     
     gtd_choice_period_var <- gtd_choice_period_loop$keyword
     
-    gtd_bridge_p1_prep <- gtd_data %>%
+    gtd_bridge_period_prep <- gtd_data %>%
       select(any_of(gtd_choice_period_var)) %>%
       mutate(Month = gtd_data$date, .before = 1)
-    gtd_bridge_p1 <- gtd_bridge_p1_prep %>%
+    gtd_bridge_p1 <- gtd_bridge_period_prep %>%
       mutate(across(all_of(c(
-        2:ncol(gtd_bridge_p1_prep)
+        2:ncol(gtd_bridge_period_prep)
       )), ~ ., .names = "{col}_b"))
     
-    gtd_period <- bridge_gtd(gtd_bridge_p1_prep, gtd_bridge_p1)
+    gtd_period <- bridge_gtd(gtd_bridge_period_prep, gtd_bridge_p1)
     
     X_m1 <- esi_bridge %>%
       mutate(Month = as.Date(Month)) %>%
