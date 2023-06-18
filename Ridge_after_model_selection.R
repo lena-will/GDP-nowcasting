@@ -281,6 +281,7 @@ ip_bridge <- ip %>%
 source("functions/fun_bridge_gtd.R")
 source("functions/fun_model_m1.R")
 source("functions/fun_model_m2.R")
+source("functions/fun_model_m3.R")
 
 # Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
 
@@ -304,6 +305,18 @@ results_m2_p1 <-
     gtd_choice_p1,
     gtd_data,
     esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+results_m3_p1 <-
+  m3(
+    gtd_choice_p1,
+    gtd_data,
+    esi_bridge,
+    ip_bridge,
     y_bridge,
     min_date_train,
     min_date_test,
@@ -338,6 +351,19 @@ results_m2_p2 <-
     max_date_test
   )
 
+results_m3_p2 <-
+  m3(
+    gtd_choice_p2,
+    gtd_data,
+    esi_bridge,
+    ip_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+
 # Period 3: Sharp downturn - trainings sample: 2005Q1-2016Q3 -------------------
 
 min_date_train <- "2005-01-01"
@@ -360,6 +386,18 @@ results_m2_p3 <-
     gtd_choice_p3,
     gtd_data,
     esi_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
+results_m3_p3 <-
+  m3(
+    gtd_choice_p3,
+    gtd_data,
+    esi_bridge,
+    ip_bridge,
     y_bridge,
     min_date_train,
     min_date_test,
@@ -393,3 +431,16 @@ results_m2_p4 <-
     min_date_test,
     max_date_test
   )
+
+results_m3_p4 <-
+  m3(
+    gtd_choice_p4,
+    gtd_data,
+    esi_bridge,
+    ip_bridge,
+    y_bridge,
+    min_date_train,
+    min_date_test,
+    max_date_test
+  )
+
