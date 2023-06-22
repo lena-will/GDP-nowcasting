@@ -53,6 +53,9 @@ m2 <- function(gtd_choice_period,
       X_m1_train <- X_m1 %>%
         filter(Month >= min_date_train & Month <= window[month]) %>%
         select(-Month)
+      mean <- apply(X_m1_train, 2, mean)
+      sd   <- apply(X_m1_train, 2, sd)
+      X_m1_train <- scale(X_m1_train, center=mean, scale=sd)
       y_m1_train <- y_m1 %>%
         filter(Month >= min_date_train & Month <= window[month]) %>%
         select(gdp)
@@ -91,6 +94,7 @@ m2 <- function(gtd_choice_period,
       X_m1_test <- X_m1 %>%
         filter(Month == window[month + 1]) %>%
         select(-Month)
+      X_m1_test <- scale(X_m1_test, center=mean, scale=sd)
       y_m1_test <- y_m1 %>%
         filter(Month == window[month + 1]) %>%
         select(gdp)

@@ -162,10 +162,10 @@ rm(preselection_p1,
 
 # Save data frames for table creation
 
-saveRDS(gtd_choice_p1, "tables/gtd_choice_p1.RDS")
-saveRDS(gtd_choice_p2, "tables/gtd_choice_p2.RDS")
-saveRDS(gtd_choice_p3, "tables/gtd_choice_p3.RDS")
-saveRDS(gtd_choice_p4, "tables/gtd_choice_p4.RDS")
+# saveRDS(gtd_choice_p1, "tables/gtd_choice_p1.RDS")
+# saveRDS(gtd_choice_p2, "tables/gtd_choice_p2.RDS")
+# saveRDS(gtd_choice_p3, "tables/gtd_choice_p3.RDS")
+# saveRDS(gtd_choice_p4, "tables/gtd_choice_p4.RDS")
 
 ## Prep data for bridge equations ----------------------------------------------
 
