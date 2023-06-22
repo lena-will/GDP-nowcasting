@@ -24,7 +24,5 @@ The main script that runs the ridge after model selection estimations is ```Ridg
 ## References
 (1) Ferrara, Laurent and Simoni, Anna (2022). "When are Google Data Useful to Nowcast GDP? An Approach via Preselection and Shrinkage". In: Journal of Business & Economic Statistics, Vol. 00, No. 0, pp. 1–15.
 
-(2) McCracken, Michael W., Ng, Serena (2015). "FRED-MD: A Monthly Database for Macroeconomic Research". In: Federal Reserve Bank of St. Louis Working Paper 2015-012.
-
-(3) Zou, Hui and Hastie, Trevor (2005). "Regularization and Variable Selection via the Elastic Net". In: Journal of the Royal Statistical Society. Series B (Statistical Methodology), Vol. 67, No. 2, pp. 301-320.
+(2) Zou, Hui and Hastie, Trevor (2005). "Regularization and Variable Selection via the Elastic Net". In: Journal of the Royal Statistical Society. Series B (Statistical Methodology), Vol. 67, No. 2, pp. 301-320.
 
