@@ -39,8 +39,6 @@ m1 <- function(gtd_choice_period,
                month(Month) == 4 |
                month(Month) == 7 | month(Month) == 10)
     
-    # training
-    
     window <- X_m1 %>%
       select(Month) %>%
       filter(Month >= min_date_test & Month <= max_date_test)
