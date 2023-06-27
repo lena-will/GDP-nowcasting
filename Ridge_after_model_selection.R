@@ -377,3 +377,41 @@ results_m3_p4 <-
     max_date_test
   )
 
+## Save results ----------------------------------------------------------------
+
+results_p1 <- results_m1_p1 %>% 
+  rename(M1 = rmsfe) %>% 
+  left_join(results_m2_p1, by = "tau") %>% 
+  rename(M2 = rmsfe) %>% 
+  left_join(results_m3_p1, by = "tau") %>% 
+  rename(M3 = rmsfe) %>% 
+  relocate(tau, .before = M1)
+
+results_p2 <- results_m1_p2 %>% 
+  rename(M1 = rmsfe) %>% 
+  left_join(results_m2_p2, by = "tau") %>% 
+  rename(M2 = rmsfe) %>% 
+  left_join(results_m3_p2, by = "tau") %>% 
+  rename(M3 = rmsfe) %>% 
+  relocate(tau, .before = M1)
+
+results_p3 <- results_m1_p3 %>% 
+  rename(M1 = rmsfe) %>% 
+  left_join(results_m2_p3, by = "tau") %>% 
+  rename(M2 = rmsfe) %>% 
+  left_join(results_m3_p3, by = "tau") %>% 
+  rename(M3 = rmsfe) %>% 
+  relocate(tau, .before = M1)
+
+results_p4 <- results_m1_p4 %>% 
+  rename(M1 = rmsfe) %>% 
+  left_join(results_m2_p4, by = "tau") %>% 
+  rename(M2 = rmsfe) %>% 
+  left_join(results_m3_p4, by = "tau") %>% 
+  rename(M3 = rmsfe) %>% 
+  relocate(tau, .before = M1)
+
+saveRDS(results_p1, "/tables/results_p1.RDS")
+saveRDS(results_p2, "/tables/results_p2.RDS")
+saveRDS(results_p3, "tables/results_p3.RDS")
+saveRDS(results_p4, "/tables/results_p4.RDS")
