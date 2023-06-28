@@ -19,7 +19,9 @@ Data and scripts to get data can be found in the ```Data prep``` folder.
 
 ## Code structure
 
-The main script that runs the ridge after model selection estimations is ```Ridge_after_model_selection.R```. All functions that the main file calls are in the folder ```functions```. Scripts to any plots are in ```plots```. ```Elastic_net.R```holds the code to the elastic net estimation, respective functions are again in the ```functions```folder.
++ The main script that runs the ridge after model selection estimations is ```Ridge_after_model_selection.R```. All functions that the main file calls are in the folder ```functions```. 
++ Scripts to any plots are in ```plots```.
++ ```Elastic_net.R``` holds the code to the elastic net estimation, respective functions are again in the ```functions``` folder.
 
 ## References
 (1) Ferrara, Laurent and Simoni, Anna (2022). "When are Google Data Useful to Nowcast GDP? An Approach via Preselection and Shrinkage". In: Journal of Business & Economic Statistics, Vol. 00, No. 0, pp. 1–15.
