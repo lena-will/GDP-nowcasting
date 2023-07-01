@@ -411,7 +411,7 @@ results_p4 <- results_m1_p4 %>%
   rename(M3 = rmsfe) %>% 
   relocate(tau, .before = M1)
 
-saveRDS(results_p1, "/tables/results_p1.RDS")
-saveRDS(results_p2, "/tables/results_p2.RDS")
-saveRDS(results_p3, "tables/results_p3.RDS")
-saveRDS(results_p4, "/tables/results_p4.RDS")
+# saveRDS(results_p1, "/tables/results_p1.RDS")
+# saveRDS(results_p2, "/tables/results_p2.RDS")
+# saveRDS(results_p3, "tables/results_p3.RDS")
+# saveRDS(results_p4, "/tables/results_p4.RDS")

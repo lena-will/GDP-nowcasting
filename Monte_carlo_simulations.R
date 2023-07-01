@@ -6,7 +6,7 @@ library(expm)
 
 N = 150 # total number of variables in X 
 t = 100 # Sample size
-s = 105 # sparsity (number of variables X related tothe common factor)
+s = 105 # sparsity (number of variables X related to the common factor)
 train = 75 # n of the trainings sample 
 r = 3 # number of factors
 h = 0 # forecasting lag (nowcasting)

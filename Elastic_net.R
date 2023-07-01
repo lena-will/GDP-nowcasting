@@ -209,7 +209,7 @@ elastic_net_p4 <- elastic_net_p4 %>%
   rename(M2 = V2) %>% 
   rename(M3 = V3)
 
-saveRDS(elastic_net_p1, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p1.RDS")
-saveRDS(elastic_net_p2, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p2.RDS")
-saveRDS(elastic_net_p3, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p3.RDS")
-saveRDS(elastic_net_p4, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p4.RDS")
+# saveRDS(elastic_net_p1, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p1.RDS")
+# saveRDS(elastic_net_p2, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p2.RDS")
+# saveRDS(elastic_net_p3, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p3.RDS")
+# saveRDS(elastic_net_p4, "/Users/lena/Git/GDP-nowcasting/tables/elastic_net_p4.RDS")
