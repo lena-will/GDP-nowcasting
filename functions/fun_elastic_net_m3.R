@@ -8,9 +8,9 @@ elastic_net_m3 <-
            max_test) {
     y_m3 <- y_bridge %>%
       mutate(Month = as.Date(Month)) %>%
-      filter(month(Month) == 1 |
-               month(Month) == 4 |
-               month(Month) == 7 | month(Month) == 10)
+      filter(month(Month) == 3 |
+               month(Month) == 6 |
+               month(Month) == 9 | month(Month) == 12)
     
     X_m3 <- esi_bridge %>%
       mutate(Month = as.Date(Month)) %>%
@@ -20,9 +20,9 @@ elastic_net_m3 <-
       left_join(ip_bridge, by = "Month") %>%
       select(-c(ip_abs, ip_mom)) %>%
       rename(ip = ip_b) %>%
-      filter(month(Month) == 1 |
-               month(Month) == 4 |
-               month(Month) == 7 | month(Month) == 10)
+      filter(month(Month) == 3 |
+               month(Month) == 6 |
+               month(Month) == 9 | month(Month) == 12)
     
     window <- X_m3 %>%
       select(Month) %>%
