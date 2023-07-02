@@ -162,10 +162,16 @@ rm(preselection_p1,
 
 # Save data frames for table creation
 
-# saveRDS(gtd_choice_p1, "tables/gtd_choice_p1.RDS")
-# saveRDS(gtd_choice_p2, "tables/gtd_choice_p2.RDS")
-# saveRDS(gtd_choice_p3, "tables/gtd_choice_p3.RDS")
-# saveRDS(gtd_choice_p4, "tables/gtd_choice_p4.RDS")
+# for_table_p1 <- gtd_choice_p1 %>% 
+#   filter(tau < 0.1) %>% 
+#   select(-t_stat)
+# for_table_p2 <- gtd_choice_p2 %>% 
+#   filter(tau < 1) %>% 
+#   select(-t_stat)
+
+#saveRDS(for_table_p1, "/tables/pre_p1.RDS")
+#saveRDS(for_table_p2, "/tables/pre_p2.RDS")
+
 
 ## Prep data for bridge equations ----------------------------------------------
 
@@ -415,3 +421,4 @@ results_p4 <- results_m1_p4 %>%
 # saveRDS(results_p2, "/tables/results_p2.RDS")
 # saveRDS(results_p3, "tables/results_p3.RDS")
 # saveRDS(results_p4, "/tables/results_p4.RDS")
+
