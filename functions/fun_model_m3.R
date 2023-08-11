@@ -8,6 +8,7 @@ m3 <- function(gtd_choice_period,
                max_date_test) {
   tau_options <- unique(gtd_choice_period$tau)
   rmsfe <- c()
+  oos_error <- c()
   
   for (tau_loop in 1:length(tau_options)) {
     gtd_choice_period_loop <- gtd_choice_period %>%
@@ -50,7 +51,7 @@ m3 <- function(gtd_choice_period,
       filter(Month >= min_date_test & Month <= max_date_test)
     window <- as.matrix(window)
     
-    oos_error <- c()
+    #oos_error <- c()
     
     
     for (month in 1:(nrow(window) - 1)) {
