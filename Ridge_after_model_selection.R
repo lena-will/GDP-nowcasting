@@ -65,20 +65,20 @@ esi_pre <- esi %>%
   rename(quarter_average = Month) %>%
   filter(quarter_average != "2023Q2")
 
-# Period 1: Recession - trainings sample: 2005Q1-2007Q3
+# Period 1: Recession - trainings sample: 2005Q1-2007Q2
 
 gdp_p1 <- gdp %>%
-  filter(Quarter >= "2005-03-01" & Quarter < "2007-12-01") %>%
+  filter(Quarter >= "2005-03-01" & Quarter < "2007-09-01") %>%
   select(gdp)
 
 gtd_pre_p1 <- gtd_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q2")
 
 ip_pre_p1 <- ip_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q2")
 
 esi_pre_p1 <- esi_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q2")
 
 preselection_p1 <-
   preselection(gdp_p1, gtd_pre_p1, esi_pre_p1, ip_pre_p1)
@@ -86,20 +86,20 @@ preselection_p1 <-
 gtd_choice_p1 <- preselection_p1 %>%
   filter(!is.na(tau))
 
-# Period 2: Cyclical Stability - trainings sample: 2005Q1-2013Q3
+# Period 2: Cyclical Stability - trainings sample: 2005Q1-2013Q2
 
 gdp_p2 <- gdp %>%
-  filter(Quarter >= "2005-03-01" & Quarter < "2013-12-01") %>%
+  filter(Quarter >= "2005-03-01" & Quarter < "2013-09-01") %>%
   select(gdp)
 
 gtd_pre_p2 <- gtd_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q2")
 
 ip_pre_p2 <- ip_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q2")
 
 esi_pre_p2 <- esi_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q2")
 
 preselection_p2 <-
   preselection(gdp_p2, gtd_pre_p2, esi_pre_p2, ip_pre_p2)
@@ -107,20 +107,20 @@ preselection_p2 <-
 gtd_choice_p2 <- preselection_p2 %>%
   filter(!is.na(tau))
 
-# Period 3: Sharp Downturn - trainings sample: 2005Q1-2016Q3
+# Period 3: Sharp Downturn - trainings sample: 2005Q1-2016Q2
 
 gdp_p3 <- gdp %>%
-  filter(Quarter >= "2005-03-01" & Quarter < "2016-12-01") %>%
+  filter(Quarter >= "2005-03-01" & Quarter < "2016-09-01") %>%
   select(gdp)
 
 gtd_pre_p3 <- gtd_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q2")
 
 ip_pre_p3 <- ip_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q2")
 
 esi_pre_p3 <- esi_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q2")
 
 preselection_p3 <-
   preselection(gdp_p3, gtd_pre_p3, esi_pre_p3, ip_pre_p3)
@@ -128,20 +128,20 @@ preselection_p3 <-
 gtd_choice_p3 <- preselection_p3 %>%
   filter(!is.na(tau))
 
-# Period 4: COVID-19 - trainings sample: 2005Q1-2021Q2
+# Period 4: COVID-19 - trainings sample: 2005Q1-2019Q2
 
 gdp_p4 <- gdp %>%
-  filter(Quarter >= "2005-03-01" & Quarter < "2021-09-01") %>%
+  filter(Quarter >= "2005-03-01" & Quarter < "2019-09-01") %>%
   select(gdp)
 
 gtd_pre_p4 <- gtd_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2021Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2019Q2")
 
 ip_pre_p4 <- ip_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2021Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2019Q2")
 
 esi_pre_p4 <- esi_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2021Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2019Q2")
 
 preselection_p4 <-
   preselection(gdp_p4, gtd_pre_p4, esi_pre_p4, ip_pre_p4)
@@ -207,8 +207,6 @@ for (ii in 1:nrow(esi_bridge)) {
   }
 }
 
-
-
 # IP
 
 ip_bridge <- ip %>%
@@ -222,11 +220,11 @@ source("functions/fun_model_m1.R")
 source("functions/fun_model_m2.R")
 source("functions/fun_model_m3.R")
 
-# Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
+# Period 1: Recession - trainings sample: 2005Q1-2007Q2 ------------------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2007-10-01"
-max_date_test <- "2009-04-01"
+min_date_test <- "2007-07-01"
+max_date_test <- "2009-06-01"
 
 results_m1_p1 <-
   m1(
@@ -262,11 +260,11 @@ results_m3_p1 <-
     max_date_test
   )
 
-# Period 2: Cyclical stability - trainings sample: 2005Q1-2013Q3 ---------------
+# Period 2: Cyclical stability - trainings sample: 2005Q1-2013Q2 ---------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2013-10-01"
-max_date_test <- "2016-01-01"
+min_date_test <- "2013-07-01"
+max_date_test <- "2016-03-01"
 
 results_m1_p2 <-
   m1(
@@ -303,10 +301,10 @@ results_m3_p2 <-
   )
 
 
-# Period 3: Sharp downturn - trainings sample: 2005Q1-2016Q3 -------------------
+# Period 3: Sharp downturn - trainings sample: 2005Q1-2016Q2 -------------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2017-01-01"
+min_date_test <- "2016-07-01"
 max_date_test <- "2018-12-01"
 
 results_m1_p3 <-
@@ -343,11 +341,11 @@ results_m3_p3 <-
     max_date_test
   )
 
-# Period 4: COVID-19 - trainings sample: 2005Q1-2019Q3 -------------------------
+# Period 4: COVID-19 - trainings sample: 2005Q1-2019Q2 -------------------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2019-12-01"
-max_date_test <- "2021-04-01"
+min_date_test <- "2019-04-01"
+max_date_test <- "2021-06-01"
 
 results_m1_p4 <-
   m1(

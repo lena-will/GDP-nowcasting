@@ -102,11 +102,11 @@ source("functions/fun_elastic_net_m1.R")
 source("functions/fun_elastic_net_m2.R")
 source("functions/fun_elastic_net_m3.R")
 
-# Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
+# Period 1: Recession - trainings sample: 2005Q1-2007Q2 ------------------------
 
 min_train <- "2005-01-01"
 min_test <- "2007-07-01"
-max_test <- "2009-04-01"
+max_test <- "2009-06-01"
 
 m1_p1 <-
   elastic_net_m1(y_bridge, esi_bridge, gtd_bridge, min_train, min_test, max_test)
@@ -121,11 +121,11 @@ m3_p1 <-
                  min_test,
                  max_test)
 
-# Period 2: Cyclical stability - trainings sample: 2005Q1-2013Q3 ---------------
+# Period 2: Cyclical stability - trainings sample: 2005Q1-2013Q2 ---------------
 
 min_train <- "2005-01-01"
-min_test <- "2013-10-01"
-max_test <- "2016-01-01"
+min_test <- "2013-07-01"
+max_test <- "2016-03-01"
 
 m1_p2 <-
   elastic_net_m1(y_bridge, esi_bridge, gtd_bridge, min_train, min_test, max_test)
@@ -140,10 +140,10 @@ m3_p2 <-
                  min_test,
                  max_test)
 
-# Period 3: Sharp downturn - trainings sample: 2005Q1-2016Q3 -------------------
+# Period 3: Sharp downturn - trainings sample: 2005Q1-2016Q2 -------------------
 
 min_train <- "2005-01-01"
-min_test <- "2017-01-01"
+min_test <- "2016-07-01"
 max_test <- "2018-12-01"
 
 m1_p3 <-
@@ -159,11 +159,11 @@ m3_p3 <-
                  min_test,
                  max_test)
 
-# Period 4: COVID-19 - trainings sample: 2005Q1-2019Q3 -------------------------
+# Period 4: COVID-19 - trainings sample: 2005Q1-2019Q2 -------------------------
 
 min_train <- "2005-01-01"
-min_test <- "2019-12-01"
-max_test <- "2021-04-01"
+min_test <- "2019-04-01"
+max_test <- "2021-06-01"
 
 m1_p4 <-
   elastic_net_m1(y_bridge, esi_bridge, gtd_bridge, min_train, min_test, max_test)
@@ -180,28 +180,28 @@ m3_p4 <-
 
 ## Save results ----------------------------------------------------------------
 
-results_p1 <- t(c(m1_p1, m2_p1, m3_p1))
+results_p1 <- t(c(m1_p1[[1]], m2_p1[[1]], m3_p1[[1]]))
 elastic_net_p1 <- as.data.frame(results_p1)
 elastic_net_p1 <- elastic_net_p1 %>% 
   rename(M1 = V1) %>% 
   rename(M2 = V2) %>% 
   rename(M3 = V3)
 
-results_p2 <- t(c(m1_p2, m2_p2, m3_p2))
+results_p2 <- t(c(m1_p2[[1]], m2_p2[[1]], m3_p2[[1]]))
 elastic_net_p2 <- as.data.frame(results_p2)
 elastic_net_p2 <- elastic_net_p2 %>% 
   rename(M1 = V1) %>% 
   rename(M2 = V2) %>% 
   rename(M3 = V3)
 
-results_p3 <- t(c(m1_p3, m2_p3, m3_p3))
+results_p3 <- t(c(m1_p3[[1]], m2_p3[[1]], m3_p3[[1]]))
 elastic_net_p3 <- as.data.frame(results_p3)
 elastic_net_p3 <- elastic_net_p3 %>% 
   rename(M1 = V1) %>% 
   rename(M2 = V2) %>% 
   rename(M3 = V3)
 
-results_p4 <- t(c(m1_p4, m2_p4, m3_p4))
+results_p4 <- t(c(m1_p4[[1]], m2_p4[[1]], m3_p4[[1]]))
 elastic_net_p4 <- as.data.frame(results_p4)
 elastic_net_p4 <- elastic_net_p4 %>% 
   rename(M1 = V1) %>% 
@@ -212,3 +212,10 @@ elastic_net_p4 <- elastic_net_p4 %>%
 # saveRDS(elastic_net_p2, "tables/elastic_net_p2.RDS")
 # saveRDS(elastic_net_p3, "tables/elastic_net_p3.RDS")
 # saveRDS(elastic_net_p4, "tables/elastic_net_p4.RDS")
+
+## Prep errors for DM-test
+
+
+
+
+

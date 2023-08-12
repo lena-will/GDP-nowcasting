@@ -50,7 +50,7 @@ m2 <- function(gtd_choice_period,
     #oos_error <- c()
     
     
-    for (month in 1:(nrow(window) - 1)) {
+    for (month in 1:(nrow(window) - 2)) {
       X_m1_train <- X_m1 %>%
         filter(Month >= min_date_train & Month <= window[month]) %>%
         select(-Month)
@@ -93,11 +93,11 @@ m2 <- function(gtd_choice_period,
         y_m1_train
       
       X_m1_test <- X_m1 %>%
-        filter(Month == window[month + 1]) %>%
+        filter(Month == window[month + 2]) %>%
         select(-Month)
       X_m1_test <- scale(X_m1_test, center=mean, scale=sd)
       y_m1_test <- y_m1 %>%
-        filter(Month == window[month + 1]) %>%
+        filter(Month == window[month + 2]) %>%
         select(gdp)
       X_m1_test <- as.matrix(X_m1_test)
       y_m1_test <- as.matrix(y_m1_test)

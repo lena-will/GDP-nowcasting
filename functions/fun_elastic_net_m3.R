@@ -31,7 +31,9 @@ elastic_net_m3 <-
     
     predictions <- c()
     oos_error <- c()
+    oos_error_all <- NULL
     rmsfe <- NULL
+    
     alpha_ini <- as.matrix(seq(
       from = 0.1,
       to = 0.9,
@@ -39,7 +41,7 @@ elastic_net_m3 <-
     ))
     
     for (ii in 1:nrow(alpha_ini)) {
-      for (month in 1:(nrow(window) - 1)) {
+      for (month in 1:(nrow(window) - 2)) {
         y_m3_train <- y_m3 %>%
           filter(Month >= min_train & Month <= window[month]) %>%
           select(gdp)
@@ -64,12 +66,12 @@ elastic_net_m3 <-
           )
         
         X_m3_test <- X_m3 %>%
-          filter(Month == window[month + 1]) %>%
+          filter(Month == window[month + 2]) %>%
           select(-Month)
         X_m3_test_z <- scale(X_m3_test, center = mean_x, scale = sd_x)
         
         y_m3_test <- y_m3 %>%
-          filter(Month == window[month + 1]) %>%
+          filter(Month == window[month + 2]) %>%
           select(gdp)
         y_m3_test <- as.matrix(y_m3_test)
         
@@ -81,8 +83,12 @@ elastic_net_m3 <-
         oos_error[month] <- (predict_en - y_m3_test)
         
       }
-      
+      oos_error_prep <- t(oos_error)
+      oos_error_all <- oos_error_all %>% 
+        rbind(oos_error_prep)
       rmsfe[ii] <- sqrt(mean(oos_error ^ 2))
     }
     min_rmsfe <- min(rmsfe)
+    min_index <- which(rmsfe == min(rmsfe))
+    results <- list(min_rmsfe, oos_error_all, min_index)
   }
