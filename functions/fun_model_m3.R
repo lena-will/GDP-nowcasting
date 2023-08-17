@@ -9,6 +9,7 @@ m3 <- function(gtd_choice_period,
   tau_options <- unique(gtd_choice_period$tau)
   rmsfe <- c()
   oos_error <- c()
+  oos_error_all <- NULL
   
   for (tau_loop in 1:length(tau_options)) {
     gtd_choice_period_loop <- gtd_choice_period %>%
@@ -111,12 +112,14 @@ m3 <- function(gtd_choice_period,
       oos_error[month] <- (y_pred - y_m1_test)
       
     }
-    
+    oos_error_prep <- t(oos_error)
+    oos_error_all <- oos_error_all %>% 
+      rbind(oos_error_prep)
     rmsfe[tau_loop] <- sqrt(mean(oos_error ^ 2))
     
   }
   
   rmsfe_results <- as.data.frame(rmsfe)
   rmsfe_results$tau <- tau_options
-  rmsfe_results
+  results <- list(rmsfe_results, oos_error_all)
 }

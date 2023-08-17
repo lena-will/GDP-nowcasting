@@ -383,40 +383,167 @@ results_m3_p4 <-
 
 ## Save results ----------------------------------------------------------------
 
-results_p1 <- results_m1_p1 %>% 
+results_p1 <- as.data.frame(results_m1_p1[[1]]) %>% 
   rename(M1 = rmsfe) %>% 
-  left_join(results_m2_p1, by = "tau") %>% 
+  left_join(as.data.frame(results_m2_p1[[1]])) %>% 
   rename(M2 = rmsfe) %>% 
-  left_join(results_m3_p1, by = "tau") %>% 
+  left_join(as.data.frame(results_m3_p1[[1]])) %>% 
   rename(M3 = rmsfe) %>% 
   relocate(tau, .before = M1)
 
-results_p2 <- results_m1_p2 %>% 
+results_p2 <- as.data.frame(results_m1_p2[[1]]) %>% 
   rename(M1 = rmsfe) %>% 
-  left_join(results_m2_p2, by = "tau") %>% 
+  left_join(as.data.frame(results_m2_p2[[1]])) %>% 
   rename(M2 = rmsfe) %>% 
-  left_join(results_m3_p2, by = "tau") %>% 
+  left_join(as.data.frame(results_m3_p2[[1]])) %>% 
   rename(M3 = rmsfe) %>% 
   relocate(tau, .before = M1)
 
-results_p3 <- results_m1_p3 %>% 
+results_p3 <- as.data.frame(results_m1_p3[[1]]) %>% 
   rename(M1 = rmsfe) %>% 
-  left_join(results_m2_p3, by = "tau") %>% 
+  left_join(as.data.frame(results_m2_p3[[1]])) %>% 
   rename(M2 = rmsfe) %>% 
-  left_join(results_m3_p3, by = "tau") %>% 
+  left_join(as.data.frame(results_m3_p3[[1]])) %>% 
   rename(M3 = rmsfe) %>% 
   relocate(tau, .before = M1)
 
-results_p4 <- results_m1_p4 %>% 
+results_p4 <- as.data.frame(results_m1_p4[[1]]) %>% 
   rename(M1 = rmsfe) %>% 
-  left_join(results_m2_p4, by = "tau") %>% 
+  left_join(as.data.frame(results_m2_p4[[1]])) %>% 
   rename(M2 = rmsfe) %>% 
-  left_join(results_m3_p4, by = "tau") %>% 
+  left_join(as.data.frame(results_m3_p4[[1]])) %>% 
   rename(M3 = rmsfe) %>% 
   relocate(tau, .before = M1)
 
-# saveRDS(results_p1, "/tables/results_p1.RDS")
-# saveRDS(results_p2, "/tables/results_p2.RDS")
+# saveRDS(results_p1, "tables/results_p1.RDS")
+# saveRDS(results_p2, "tables/results_p2.RDS")
 # saveRDS(results_p3, "tables/results_p3.RDS")
-# saveRDS(results_p4, "/tables/results_p4.RDS")
+# saveRDS(results_p4, "tables/results_p4.RDS")
+
+## Save oos error results ------------------------------------------------------
+
+# Period 1
+
+quarters_p1 <-
+  c("2008Q1", "2008Q2", "2008Q3", "2008Q4", "2009Q1", "2009Q2")
+
+oos_error_m1_p1 <- as.data.frame(results_m1_p1[[2]]) %>%
+  mutate(tau = results_m1_p1[[1]]$tau, .before = 1)
+colnames(oos_error_m1_p1) <- c("tau", quarters_p1)
+colnames(oos_error_m1_p1)[2:ncol(oos_error_m1_p1)] <-
+  paste(colnames(oos_error_m1_p1)[2:ncol(oos_error_m1_p1)], "M1", sep = "_")
+
+oos_error_m2_p1 <- as.data.frame(results_m2_p1[[2]]) %>%
+  mutate(tau = results_m2_p1[[1]]$tau, .before = 1)
+colnames(oos_error_m2_p1) <- c("tau", quarters_p1)
+colnames(oos_error_m2_p1)[2:ncol(oos_error_m2_p1)] <-
+  paste(colnames(oos_error_m2_p1)[2:ncol(oos_error_m2_p1)], "M2", sep = "_")
+
+oos_error_m3_p1 <- as.data.frame(results_m3_p1[[2]]) %>%
+  mutate(tau = results_m3_p1[[1]]$tau, .before = 1)
+colnames(oos_error_m3_p1) <- c("tau", quarters_p1)
+colnames(oos_error_m3_p1)[2:ncol(oos_error_m3_p1)] <-
+  paste(colnames(oos_error_m3_p1)[2:ncol(oos_error_m3_p1)], "M3", sep = "_")
+
+oos_error_p1 <- oos_error_m1_p1 %>% 
+  left_join(oos_error_m2_p1, by = "tau") %>% 
+  left_join(oos_error_m3_p1, by = "tau")
+
+rm(oos_error_m1_p1, oos_error_m2_p1, oos_error_m3_p1)
+
+# Period 2
+
+quarters_p2 <-
+  c("2014Q1", "2014Q2", "2014Q3", "2014Q4", "2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1")
+
+oos_error_m1_p2 <- as.data.frame(results_m1_p2[[2]]) %>%
+  mutate(tau = results_m1_p2[[1]]$tau, .before = 1)
+colnames(oos_error_m1_p2) <- c("tau", quarters_p2)
+colnames(oos_error_m1_p2)[2:ncol(oos_error_m1_p2)] <-
+  paste(colnames(oos_error_m1_p2)[2:ncol(oos_error_m1_p2)], "M1", sep = "_")
+
+oos_error_m2_p2 <- as.data.frame(results_m2_p2[[2]]) %>%
+  mutate(tau = results_m2_p2[[1]]$tau, .before = 1)
+colnames(oos_error_m2_p2) <- c("tau", quarters_p2)
+colnames(oos_error_m2_p2)[2:ncol(oos_error_m2_p2)] <-
+  paste(colnames(oos_error_m2_p2)[2:ncol(oos_error_m2_p2)], "M2", sep = "_")
+
+oos_error_m3_p2 <- as.data.frame(results_m3_p2[[2]]) %>%
+  mutate(tau = results_m3_p2[[1]]$tau, .before = 1)
+colnames(oos_error_m3_p2) <- c("tau", quarters_p2)
+colnames(oos_error_m3_p2)[2:ncol(oos_error_m3_p2)] <-
+  paste(colnames(oos_error_m3_p2)[2:ncol(oos_error_m3_p2)], "M3", sep = "_")
+
+oos_error_p2 <- oos_error_m1_p2 %>% 
+  left_join(oos_error_m2_p2, by = "tau") %>% 
+  left_join(oos_error_m3_p2, by = "tau")
+
+rm(oos_error_m1_p2, oos_error_m2_p2, oos_error_m3_p2)
+
+# Period 3
+
+quarters_p3 <-
+  c("2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4")
+
+oos_error_m1_p3 <- as.data.frame(results_m1_p3[[2]]) %>%
+  mutate(tau = results_m1_p3[[1]]$tau, .before = 1)
+colnames(oos_error_m1_p3) <- c("tau", quarters_p3)
+colnames(oos_error_m1_p3)[2:ncol(oos_error_m1_p3)] <-
+  paste(colnames(oos_error_m1_p3)[2:ncol(oos_error_m1_p3)], "M1", sep = "_")
+
+oos_error_m2_p3 <- as.data.frame(results_m2_p3[[2]]) %>%
+  mutate(tau = results_m2_p3[[1]]$tau, .before = 1)
+colnames(oos_error_m2_p3) <- c("tau", quarters_p3)
+colnames(oos_error_m2_p3)[2:ncol(oos_error_m2_p3)] <-
+  paste(colnames(oos_error_m2_p3)[2:ncol(oos_error_m2_p3)], "M2", sep = "_")
+
+oos_error_m3_p3 <- as.data.frame(results_m3_p3[[2]]) %>%
+  mutate(tau = results_m3_p3[[1]]$tau, .before = 1)
+colnames(oos_error_m3_p3) <- c("tau", quarters_p3)
+colnames(oos_error_m3_p3)[2:ncol(oos_error_m3_p3)] <-
+  paste(colnames(oos_error_m3_p3)[2:ncol(oos_error_m3_p3)], "M3", sep = "_")
+
+oos_error_p3 <- oos_error_m1_p3 %>% 
+  left_join(oos_error_m2_p3, by = "tau") %>% 
+  left_join(oos_error_m3_p3, by = "tau")
+
+rm(oos_error_m1_p3, oos_error_m2_p3, oos_error_m3_p3)
+
+# Period 4
+
+quarters_p4 <-
+  c("2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2")
+
+oos_error_m1_p4 <- as.data.frame(results_m1_p4[[2]]) %>%
+  mutate(tau = results_m1_p4[[1]]$tau, .before = 1)
+colnames(oos_error_m1_p4) <- c("tau", quarters_p4)
+colnames(oos_error_m1_p4)[2:ncol(oos_error_m1_p4)] <-
+  paste(colnames(oos_error_m1_p4)[2:ncol(oos_error_m1_p4)], "M1", sep = "_")
+
+oos_error_m2_p4 <- as.data.frame(results_m2_p4[[2]]) %>%
+  mutate(tau = results_m2_p4[[1]]$tau, .before = 1)
+colnames(oos_error_m2_p4) <- c("tau", quarters_p4)
+colnames(oos_error_m2_p4)[2:ncol(oos_error_m2_p4)] <-
+  paste(colnames(oos_error_m2_p4)[2:ncol(oos_error_m2_p4)], "M2", sep = "_")
+
+oos_error_m3_p4 <- as.data.frame(results_m3_p4[[2]]) %>%
+  mutate(tau = results_m3_p4[[1]]$tau, .before = 1)
+colnames(oos_error_m3_p4) <- c("tau", quarters_p4)
+colnames(oos_error_m3_p4)[2:ncol(oos_error_m3_p4)] <-
+  paste(colnames(oos_error_m3_p4)[2:ncol(oos_error_m3_p4)], "M3", sep = "_")
+
+oos_error_p4 <- oos_error_m1_p4 %>% 
+  left_join(oos_error_m2_p4, by = "tau") %>% 
+  left_join(oos_error_m3_p4, by = "tau")
+
+rm(oos_error_m1_p4, oos_error_m2_p4, oos_error_m3_p4)
+
+saveRDS(oos_error_p1, "tests/oos_errors_p1_ridge.RDS")
+saveRDS(oos_error_p2, "tests/oos_errors_p2_ridge.RDS")
+saveRDS(oos_error_p3, "tests/oos_errors_p3_ridge.RDS")
+saveRDS(oos_error_p4, "tests/oos_errors_p4_ridge.RDS")
+
+
+
+
 

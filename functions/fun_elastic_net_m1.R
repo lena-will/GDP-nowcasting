@@ -89,5 +89,6 @@ elastic_net_m1 <-
     }
     min_rmsfe <- min(rmsfe)
     min_index <- which(rmsfe == min(rmsfe))
-    results <- list(min_rmsfe, oos_error_all, min_index)
+    oos_error_min <- oos_error_all[min_index[1], ]
+    results <- list(min_rmsfe, oos_error_all, oos_error_min, min_index)
   }

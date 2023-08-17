@@ -215,7 +215,28 @@ elastic_net_p4 <- elastic_net_p4 %>%
 
 ## Prep errors for DM-test
 
+oos_errors_p1 <- as.data.frame(m1_p1[[3]]) %>% 
+  cbind(as.data.frame(m2_p1[[3]])) %>% 
+  cbind(as.data.frame(m3_p1[[3]])) %>% 
+  rename(c(M1 = `m1_p1[[3]]`, M2 = `m2_p1[[3]]`, M3 = `m3_p1[[3]]`))
+
+oos_errors_p2 <- as.data.frame(m1_p2[[3]]) %>% 
+  cbind(as.data.frame(m2_p2[[3]])) %>% 
+  cbind(as.data.frame(m3_p2[[3]])) %>% 
+  rename(c(M1 = `m1_p2[[3]]`, M2 = `m2_p2[[3]]`, M3 = `m3_p2[[3]]`))
+
+oos_errors_p3 <- as.data.frame(m1_p3[[3]]) %>% 
+  cbind(as.data.frame(m2_p3[[3]])) %>% 
+  cbind(as.data.frame(m3_p3[[3]])) %>% 
+  rename(c(M1 = `m1_p3[[3]]`, M2 = `m2_p3[[3]]`, M3 = `m3_p3[[3]]`))
+
+oos_errors_p4 <- as.data.frame(m1_p4[[3]]) %>% 
+  cbind(as.data.frame(m2_p4[[3]])) %>% 
+  cbind(as.data.frame(m3_p4[[3]])) %>% 
+  rename(c(M1 = `m1_p4[[3]]`, M2 = `m2_p4[[3]]`, M3 = `m3_p4[[3]]`))
 
 
-
-
+saveRDS(oos_errors_p1, "tests/oos_errors_p1.RDS")
+saveRDS(oos_errors_p2, "tests/oos_errors_p2.RDS")
+saveRDS(oos_errors_p3, "tests/oos_errors_p3.RDS")
+saveRDS(oos_errors_p4, "tests/oos_errors_p4.RDS")
