@@ -85,7 +85,6 @@ m1 <- function(gtd_choice_period,
       
       gcv_min <- which(gcv == min(gcv))
       alpha_min <- alpha_ini[gcv_min] * n
-      #print(alpha_min)
       beta_hat_opt <-
         solve(t(X_m1_train) %*% X_m1_train + alpha_min * ident) %*% t(X_m1_train) %*%
         y_m1_train
@@ -103,7 +102,7 @@ m1 <- function(gtd_choice_period,
       y_pred <- X_m1_test %*% beta_hat_opt
       
       oos_error[month] <- (y_pred - y_m1_test)
-      
+      print(oos_error)
     }
     oos_error_prep <- t(oos_error)
     oos_error_all <- oos_error_all %>% 

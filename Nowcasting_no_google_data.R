@@ -86,12 +86,28 @@ source("functions/fun_m3_nogoogle.R")
 # Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2007-10-01"
-max_date_test <- "2009-04-01"
+min_date_test <- "2007-07-01"
+max_date_test <- "2009-06-01"
 
-m1_p1 <- m1_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m2_p1 <- m2_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m3_p1 <- m3_nogoogle(esi_bridge, ip_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
+m1_p1 <-
+  m1_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m2_p1 <-
+  m2_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m3_p1 <-
+  m3_nogoogle(esi_bridge,
+              ip_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
 
 period1 <- bind_cols(m1_p1, m2_p1, m3_p1)
 names <- c("M1", "M2", "M3")
@@ -100,12 +116,28 @@ colnames(period1) <- names
 # Period 2: Cyclical stability - trainings sample: 2005Q1-2013Q3 ---------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2013-10-01"
-max_date_test <- "2016-01-01"
+min_date_test <- "2013-07-01"
+max_date_test <- "2016-03-01"
 
-m1_p2 <- m1_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m2_p2 <- m2_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m3_p2 <- m3_nogoogle(esi_bridge, ip_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
+m1_p2 <-
+  m1_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m2_p2 <-
+  m2_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m3_p2 <-
+  m3_nogoogle(esi_bridge,
+              ip_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
 
 period2 <- bind_cols(m1_p2, m2_p2, m3_p2)
 names <- c("M1", "M2", "M3")
@@ -114,12 +146,28 @@ colnames(period2) <- names
 # Period 3: Sharp downturn - trainings sample: 2005Q1-2016Q3 -------------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2017-01-01"
+min_date_test <- "2016-07-01"
 max_date_test <- "2018-12-01"
 
-m1_p3 <- m1_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m2_p3 <- m2_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m3_p3 <- m3_nogoogle(esi_bridge, ip_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
+m1_p3 <-
+  m1_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m2_p3 <-
+  m2_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m3_p3 <-
+  m3_nogoogle(esi_bridge,
+              ip_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
 
 period3 <- bind_cols(m1_p3, m2_p3, m3_p3)
 names <- c("M1", "M2", "M3")
@@ -128,12 +176,28 @@ colnames(period3) <- names
 # Period 4: COVID-19 - trainings sample: 2005Q1-2019Q3 -------------------------
 
 min_date_train <- "2005-01-01"
-min_date_test <- "2019-12-01"
-max_date_test <- "2021-04-01"
+min_date_test <- "2019-04-01"
+max_date_test <- "2021-06-01"
 
-m1_p4 <- m1_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m2_p4 <- m2_nogoogle(esi_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
-m3_p4 <- m3_nogoogle(esi_bridge, ip_bridge, y_bridge, min_date_train, min_date_test, max_date_test)
+m1_p4 <-
+  m1_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m2_p4 <-
+  m2_nogoogle(esi_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
+m3_p4 <-
+  m3_nogoogle(esi_bridge,
+              ip_bridge,
+              y_bridge,
+              min_date_train,
+              min_date_test,
+              max_date_test)
 
 period4 <- bind_cols(m1_p4, m2_p4, m3_p4)
 names <- c("M1", "M2", "M3")
@@ -142,4 +206,3 @@ colnames(period4) <- names
 ## Save results ----------------------------------------------------------------
 
 no_google <- bind_rows(period1, period2, period3, period4)
-

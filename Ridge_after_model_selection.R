@@ -65,20 +65,20 @@ esi_pre <- esi %>%
   rename(quarter_average = Month) %>%
   filter(quarter_average != "2023Q2")
 
-# Period 1: Recession - trainings sample: 2005Q1-2007Q2
+# Period 1: Recession - trainings sample: 2005Q1-2007Q3
 
 gdp_p1 <- gdp %>%
-  filter(Quarter >= "2005-03-01" & Quarter < "2007-09-01") %>%
+  filter(Quarter >= "2005-03-01" & Quarter < "2007-12-01") %>%
   select(gdp)
 
 gtd_pre_p1 <- gtd_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
 
 ip_pre_p1 <- ip_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
 
 esi_pre_p1 <- esi_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2007Q3")
 
 preselection_p1 <-
   preselection(gdp_p1, gtd_pre_p1, esi_pre_p1, ip_pre_p1)
@@ -86,20 +86,20 @@ preselection_p1 <-
 gtd_choice_p1 <- preselection_p1 %>%
   filter(!is.na(tau))
 
-# Period 2: Cyclical Stability - trainings sample: 2005Q1-2013Q2
+# Period 2: Cyclical Stability - trainings sample: 2005Q1-2013Q3
 
 gdp_p2 <- gdp %>%
-  filter(Quarter >= "2005-03-01" & Quarter < "2013-09-01") %>%
+  filter(Quarter >= "2005-03-01" & Quarter < "2013-12-01") %>%
   select(gdp)
 
 gtd_pre_p2 <- gtd_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
 
 ip_pre_p2 <- ip_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
 
 esi_pre_p2 <- esi_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2013Q3")
 
 preselection_p2 <-
   preselection(gdp_p2, gtd_pre_p2, esi_pre_p2, ip_pre_p2)
@@ -107,20 +107,20 @@ preselection_p2 <-
 gtd_choice_p2 <- preselection_p2 %>%
   filter(!is.na(tau))
 
-# Period 3: Sharp Downturn - trainings sample: 2005Q1-2016Q2
+# Period 3: Sharp Downturn - trainings sample: 2005Q1-2016Q3
 
 gdp_p3 <- gdp %>%
-  filter(Quarter >= "2005-03-01" & Quarter < "2016-09-01") %>%
+  filter(Quarter >= "2005-03-01" & Quarter < "2016-12-01") %>%
   select(gdp)
 
 gtd_pre_p3 <- gtd_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
 
 ip_pre_p3 <- ip_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
 
 esi_pre_p3 <- esi_pre %>%
-  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q2")
+  filter(quarter_average >= "2005Q1" & quarter_average <= "2016Q3")
 
 preselection_p3 <-
   preselection(gdp_p3, gtd_pre_p3, esi_pre_p3, ip_pre_p3)
@@ -162,12 +162,12 @@ rm(preselection_p1,
 
 # Save data frames for table creation
 
-# for_table_p1 <- gtd_choice_p1 %>% 
-#   filter(tau < 0.1) %>% 
-#   select(-t_stat)
-# for_table_p2 <- gtd_choice_p2 %>% 
-#   filter(tau < 1) %>% 
-#   select(-t_stat)
+for_table_p1 <- gtd_choice_p1 %>%
+  filter(tau < 0.1) %>%
+  select(-t_stat)
+for_table_p2 <- gtd_choice_p2 %>%
+  filter(tau < 1) %>%
+  select(-t_stat)
 
 #saveRDS(for_table_p1, "/tables/pre_p1.RDS")
 #saveRDS(for_table_p2, "/tables/pre_p2.RDS")
@@ -185,7 +185,7 @@ y_bridge$Month <- ip$Month
 y_bridge <- y_bridge %>%
   relocate(Month, .after = Quarter)
 
-# ESi
+# ESI
 
 esi_bridge <- esi %>%
   add_column(esi_b = NA)
@@ -220,7 +220,7 @@ source("functions/fun_model_m1.R")
 source("functions/fun_model_m2.R")
 source("functions/fun_model_m3.R")
 
-# Period 1: Recession - trainings sample: 2005Q1-2007Q2 ------------------------
+# Period 1: Recession - trainings sample: 2005Q1-2007Q3 ------------------------
 
 min_date_train <- "2005-01-01"
 min_date_test <- "2007-07-01"
@@ -424,119 +424,88 @@ results_p4 <- as.data.frame(results_m1_p4[[1]]) %>%
 
 # Period 1
 
-quarters_p1 <-
-  c("2008Q1", "2008Q2", "2008Q3", "2008Q4", "2009Q1", "2009Q2")
+oos_error_m1_p1 <- as.data.frame(t(results_m1_p1[[2]]))
+colnames(oos_error_m1_p1) <- results_m1_p1[[1]]$tau
+colnames(oos_error_m1_p1)[1:ncol(oos_error_m1_p1)] <-
+  paste(colnames(oos_error_m1_p1)[1:ncol(oos_error_m1_p1)], "M1", sep = "_")
 
-oos_error_m1_p1 <- as.data.frame(results_m1_p1[[2]]) %>%
-  mutate(tau = results_m1_p1[[1]]$tau, .before = 1)
-colnames(oos_error_m1_p1) <- c("tau", quarters_p1)
-colnames(oos_error_m1_p1)[2:ncol(oos_error_m1_p1)] <-
-  paste(colnames(oos_error_m1_p1)[2:ncol(oos_error_m1_p1)], "M1", sep = "_")
+oos_error_m2_p1 <- as.data.frame(t(results_m2_p1[[2]]))
+colnames(oos_error_m2_p1) <- results_m2_p1[[1]]$tau
+colnames(oos_error_m2_p1)[1:ncol(oos_error_m2_p1)] <-
+  paste(colnames(oos_error_m2_p1)[1:ncol(oos_error_m2_p1)], "M2", sep = "_")
 
-oos_error_m2_p1 <- as.data.frame(results_m2_p1[[2]]) %>%
-  mutate(tau = results_m2_p1[[1]]$tau, .before = 1)
-colnames(oos_error_m2_p1) <- c("tau", quarters_p1)
-colnames(oos_error_m2_p1)[2:ncol(oos_error_m2_p1)] <-
-  paste(colnames(oos_error_m2_p1)[2:ncol(oos_error_m2_p1)], "M2", sep = "_")
+oos_error_m3_p1 <- as.data.frame(t(results_m3_p1[[2]]))
+colnames(oos_error_m3_p1) <- results_m3_p1[[1]]$tau
+colnames(oos_error_m3_p1)[1:ncol(oos_error_m3_p1)] <-
+  paste(colnames(oos_error_m3_p1)[1:ncol(oos_error_m3_p1)], "M3", sep = "_")
 
-oos_error_m3_p1 <- as.data.frame(results_m3_p1[[2]]) %>%
-  mutate(tau = results_m3_p1[[1]]$tau, .before = 1)
-colnames(oos_error_m3_p1) <- c("tau", quarters_p1)
-colnames(oos_error_m3_p1)[2:ncol(oos_error_m3_p1)] <-
-  paste(colnames(oos_error_m3_p1)[2:ncol(oos_error_m3_p1)], "M3", sep = "_")
-
-oos_error_p1 <- oos_error_m1_p1 %>% 
-  left_join(oos_error_m2_p1, by = "tau") %>% 
-  left_join(oos_error_m3_p1, by = "tau")
-
+oos_error_p1 <- cbind(oos_error_m1_p1, oos_error_m2_p1, oos_error_m3_p1)
+  
 rm(oos_error_m1_p1, oos_error_m2_p1, oos_error_m3_p1)
 
 # Period 2
 
-quarters_p2 <-
-  c("2014Q1", "2014Q2", "2014Q3", "2014Q4", "2015Q1", "2015Q2", "2015Q3", "2015Q4", "2016Q1")
+oos_error_m1_p2 <- as.data.frame(t(results_m1_p2[[2]]))
+colnames(oos_error_m1_p2) <- results_m1_p2[[1]]$tau
+colnames(oos_error_m1_p2)[1:ncol(oos_error_m1_p2)] <-
+  paste(colnames(oos_error_m1_p2)[1:ncol(oos_error_m1_p2)], "M1", sep = "_")
 
-oos_error_m1_p2 <- as.data.frame(results_m1_p2[[2]]) %>%
-  mutate(tau = results_m1_p2[[1]]$tau, .before = 1)
-colnames(oos_error_m1_p2) <- c("tau", quarters_p2)
-colnames(oos_error_m1_p2)[2:ncol(oos_error_m1_p2)] <-
-  paste(colnames(oos_error_m1_p2)[2:ncol(oos_error_m1_p2)], "M1", sep = "_")
+oos_error_m2_p2 <- as.data.frame(t(results_m2_p2[[2]]))
+colnames(oos_error_m2_p2) <- results_m2_p2[[1]]$tau
+colnames(oos_error_m2_p2)[1:ncol(oos_error_m2_p2)] <-
+  paste(colnames(oos_error_m2_p2)[1:ncol(oos_error_m2_p2)], "M2", sep = "_")
 
-oos_error_m2_p2 <- as.data.frame(results_m2_p2[[2]]) %>%
-  mutate(tau = results_m2_p2[[1]]$tau, .before = 1)
-colnames(oos_error_m2_p2) <- c("tau", quarters_p2)
-colnames(oos_error_m2_p2)[2:ncol(oos_error_m2_p2)] <-
-  paste(colnames(oos_error_m2_p2)[2:ncol(oos_error_m2_p2)], "M2", sep = "_")
+oos_error_m3_p2 <- as.data.frame(t(results_m3_p2[[2]]))
+colnames(oos_error_m3_p2) <- results_m3_p2[[1]]$tau
+colnames(oos_error_m3_p2)[1:ncol(oos_error_m3_p2)] <-
+  paste(colnames(oos_error_m3_p2)[1:ncol(oos_error_m3_p2)], "M3", sep = "_")
 
-oos_error_m3_p2 <- as.data.frame(results_m3_p2[[2]]) %>%
-  mutate(tau = results_m3_p2[[1]]$tau, .before = 1)
-colnames(oos_error_m3_p2) <- c("tau", quarters_p2)
-colnames(oos_error_m3_p2)[2:ncol(oos_error_m3_p2)] <-
-  paste(colnames(oos_error_m3_p2)[2:ncol(oos_error_m3_p2)], "M3", sep = "_")
-
-oos_error_p2 <- oos_error_m1_p2 %>% 
-  left_join(oos_error_m2_p2, by = "tau") %>% 
-  left_join(oos_error_m3_p2, by = "tau")
+oos_error_p2 <- cbind(oos_error_m1_p2, oos_error_m2_p2, oos_error_m3_p2)
 
 rm(oos_error_m1_p2, oos_error_m2_p2, oos_error_m3_p2)
 
 # Period 3
 
-quarters_p3 <-
-  c("2017Q1", "2017Q2", "2017Q3", "2017Q4", "2018Q1", "2018Q2", "2018Q3", "2018Q4")
+oos_error_m1_p3 <- as.data.frame(t(results_m1_p3[[2]]))
+colnames(oos_error_m1_p3) <- results_m1_p3[[1]]$tau
+colnames(oos_error_m1_p3)[1:ncol(oos_error_m1_p3)] <-
+  paste(colnames(oos_error_m1_p3)[1:ncol(oos_error_m1_p3)], "M1", sep = "_")
 
-oos_error_m1_p3 <- as.data.frame(results_m1_p3[[2]]) %>%
-  mutate(tau = results_m1_p3[[1]]$tau, .before = 1)
-colnames(oos_error_m1_p3) <- c("tau", quarters_p3)
-colnames(oos_error_m1_p3)[2:ncol(oos_error_m1_p3)] <-
-  paste(colnames(oos_error_m1_p3)[2:ncol(oos_error_m1_p3)], "M1", sep = "_")
+oos_error_m2_p3 <- as.data.frame(t(results_m2_p3[[2]]))
+colnames(oos_error_m2_p3) <- results_m2_p3[[1]]$tau
+colnames(oos_error_m2_p3)[1:ncol(oos_error_m2_p3)] <-
+  paste(colnames(oos_error_m2_p3)[1:ncol(oos_error_m2_p3)], "M2", sep = "_")
 
-oos_error_m2_p3 <- as.data.frame(results_m2_p3[[2]]) %>%
-  mutate(tau = results_m2_p3[[1]]$tau, .before = 1)
-colnames(oos_error_m2_p3) <- c("tau", quarters_p3)
-colnames(oos_error_m2_p3)[2:ncol(oos_error_m2_p3)] <-
-  paste(colnames(oos_error_m2_p3)[2:ncol(oos_error_m2_p3)], "M2", sep = "_")
+oos_error_m3_p3 <- as.data.frame(t(results_m3_p3[[2]]))
+colnames(oos_error_m3_p3) <- results_m3_p3[[1]]$tau
+colnames(oos_error_m3_p3)[1:ncol(oos_error_m3_p3)] <-
+  paste(colnames(oos_error_m3_p3)[1:ncol(oos_error_m3_p3)], "M3", sep = "_")
 
-oos_error_m3_p3 <- as.data.frame(results_m3_p3[[2]]) %>%
-  mutate(tau = results_m3_p3[[1]]$tau, .before = 1)
-colnames(oos_error_m3_p3) <- c("tau", quarters_p3)
-colnames(oos_error_m3_p3)[2:ncol(oos_error_m3_p3)] <-
-  paste(colnames(oos_error_m3_p3)[2:ncol(oos_error_m3_p3)], "M3", sep = "_")
-
-oos_error_p3 <- oos_error_m1_p3 %>% 
-  left_join(oos_error_m2_p3, by = "tau") %>% 
-  left_join(oos_error_m3_p3, by = "tau")
+oos_error_p3 <- cbind(oos_error_m1_p3, oos_error_m2_p3, oos_error_m3_p3)
 
 rm(oos_error_m1_p3, oos_error_m2_p3, oos_error_m3_p3)
 
 # Period 4
 
-quarters_p4 <-
-  c("2019Q4", "2020Q1", "2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2")
+oos_error_m1_p4 <- as.data.frame(t(results_m1_p4[[2]]))
+colnames(oos_error_m1_p4) <- results_m1_p4[[1]]$tau
+colnames(oos_error_m1_p4)[1:ncol(oos_error_m1_p4)] <-
+  paste(colnames(oos_error_m1_p4)[1:ncol(oos_error_m1_p4)], "M1", sep = "_")
 
-oos_error_m1_p4 <- as.data.frame(results_m1_p4[[2]]) %>%
-  mutate(tau = results_m1_p4[[1]]$tau, .before = 1)
-colnames(oos_error_m1_p4) <- c("tau", quarters_p4)
-colnames(oos_error_m1_p4)[2:ncol(oos_error_m1_p4)] <-
-  paste(colnames(oos_error_m1_p4)[2:ncol(oos_error_m1_p4)], "M1", sep = "_")
+oos_error_m2_p4 <- as.data.frame(t(results_m2_p4[[2]]))
+colnames(oos_error_m2_p4) <- results_m2_p4[[1]]$tau
+colnames(oos_error_m2_p4)[1:ncol(oos_error_m2_p4)] <-
+  paste(colnames(oos_error_m2_p4)[1:ncol(oos_error_m2_p4)], "M2", sep = "_")
 
-oos_error_m2_p4 <- as.data.frame(results_m2_p4[[2]]) %>%
-  mutate(tau = results_m2_p4[[1]]$tau, .before = 1)
-colnames(oos_error_m2_p4) <- c("tau", quarters_p4)
-colnames(oos_error_m2_p4)[2:ncol(oos_error_m2_p4)] <-
-  paste(colnames(oos_error_m2_p4)[2:ncol(oos_error_m2_p4)], "M2", sep = "_")
+oos_error_m3_p4 <- as.data.frame(t(results_m3_p4[[2]]))
+colnames(oos_error_m3_p4) <- results_m3_p4[[1]]$tau
+colnames(oos_error_m3_p4)[1:ncol(oos_error_m3_p4)] <-
+  paste(colnames(oos_error_m3_p4)[1:ncol(oos_error_m3_p4)], "M3", sep = "_")
 
-oos_error_m3_p4 <- as.data.frame(results_m3_p4[[2]]) %>%
-  mutate(tau = results_m3_p4[[1]]$tau, .before = 1)
-colnames(oos_error_m3_p4) <- c("tau", quarters_p4)
-colnames(oos_error_m3_p4)[2:ncol(oos_error_m3_p4)] <-
-  paste(colnames(oos_error_m3_p4)[2:ncol(oos_error_m3_p4)], "M3", sep = "_")
-
-oos_error_p4 <- oos_error_m1_p4 %>% 
-  left_join(oos_error_m2_p4, by = "tau") %>% 
-  left_join(oos_error_m3_p4, by = "tau")
+oos_error_p4 <- cbind(oos_error_m1_p4, oos_error_m2_p4, oos_error_m3_p4)
 
 rm(oos_error_m1_p4, oos_error_m2_p4, oos_error_m3_p4)
+
 
 saveRDS(oos_error_p1, "tests/oos_errors_p1_ridge.RDS")
 saveRDS(oos_error_p2, "tests/oos_errors_p2_ridge.RDS")
