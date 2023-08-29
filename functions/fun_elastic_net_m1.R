@@ -16,9 +16,6 @@ elastic_net_m1 <-
       select(-ESI) %>%
       rename(esi = esi_b) %>%
       left_join(gtd_bridge, by = "Month") %>%
-      left_join(ip_bridge, by = "Month") %>% 
-      select(-c(ip_abs, ip_mom)) %>% 
-      rename(ip = ip_b) %>% 
       filter(month(Month) == 1 |
                month(Month) == 4 |
                month(Month) == 7 | month(Month) == 10)

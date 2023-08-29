@@ -104,8 +104,9 @@ colnames(ridge_p4) <- c("M1", "M2", "M3")
 
 rm(index, m1_p4_tau, m2_p4_tau, m3_p4_tau)
 
-# testing
+## Testing ---------------------------------------------------------------------
 
+# Period 1
 test_p1_m1 <- dm.test(ridge_p1$M1,
                       oos_error_p1_en$M1,
                       alternative = "two.sided",
@@ -114,7 +115,180 @@ test_p1_m1 <- dm.test(ridge_p1$M1,
                       varestimator = "acf"
                       )
 
+test_p1_m2 <- dm.test(ridge_p1$M2,
+                      oos_error_p1_en$M2,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
 
+test_p1_m3 <- dm.test(ridge_p1$M3,
+                      oos_error_p1_en$M3,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+statistic_p1 <- as.data.frame(test_p1_m1[[1]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p1_m2[[1]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p1_m3[[1]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "test statistic", .before = 1)
+
+pvalue_p1 <- as.data.frame(test_p1_m1[[5]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p1_m2[[5]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p1_m3[[5]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "p-value", .before = 1)
+
+test_results_p1 <- statistic_p1 %>% 
+  rbind(pvalue_p1)
+
+saveRDS(test_results_p1, "tables/test_results_p1.RDS")
+
+# Period 2
+test_p2_m1 <- dm.test(ridge_p2$M1,
+                      oos_error_p2_en$M1,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+test_p2_m2 <- dm.test(ridge_p2$M2,
+                      oos_error_p2_en$M2,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+test_p2_m3 <- dm.test(ridge_p2$M3,
+                      oos_error_p2_en$M3,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+statistic_p2 <- as.data.frame(test_p2_m1[[1]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p2_m2[[1]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p2_m3[[1]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "test statistic", .before = 1)
+
+pvalue_p2 <- as.data.frame(test_p2_m1[[5]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p2_m2[[5]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p2_m3[[5]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "p-value", .before = 1)
+
+test_results_p2 <- statistic_p2 %>% 
+  rbind(pvalue_p2)
+
+saveRDS(test_results_p2, "tables/test_results_p2.RDS")
+
+# Period 3
+test_p3_m1 <- dm.test(ridge_p3$M1,
+                      oos_error_p3_en$M1,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+test_p3_m2 <- dm.test(ridge_p3$M2,
+                      oos_error_p3_en$M2,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+test_p3_m3 <- dm.test(ridge_p3$M3,
+                      oos_error_p3_en$M3,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+statistic_p3 <- as.data.frame(test_p3_m1[[1]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p3_m2[[1]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p3_m3[[1]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "test statistic", .before = 1)
+
+pvalue_p3 <- as.data.frame(test_p3_m1[[5]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p3_m2[[5]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p3_m3[[5]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "p-value", .before = 1)
+
+test_results_p3 <- statistic_p3 %>% 
+  rbind(pvalue_p3)
+
+saveRDS(test_results_p3, "tables/test_results_p3.RDS")
+
+# Period 4
+test_p4_m1 <- dm.test(ridge_p4$M1,
+                      oos_error_p4_en$M1,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+test_p4_m2 <- dm.test(ridge_p4$M2,
+                      oos_error_p4_en$M2,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+test_p4_m3 <- dm.test(ridge_p4$M3,
+                      oos_error_p4_en$M3,
+                      alternative = "two.sided",
+                      h = 2,
+                      power = 2,
+                      varestimator = "acf"
+)
+
+statistic_p4 <- as.data.frame(test_p4_m1[[1]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p4_m2[[1]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p4_m3[[1]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "test statistic", .before = 1)
+
+pvalue_p4 <- as.data.frame(test_p4_m1[[5]]) %>% 
+  rename(M1 = 1) %>% 
+  cbind(as.data.frame(test_p4_m2[[5]])) %>% 
+  rename(M2 = 2) %>%
+  cbind(as.data.frame(test_p4_m3[[5]])) %>% 
+  rename(M3 = 3) %>% 
+  mutate(" " = "p-value", .before = 1)
+
+test_results_p4 <- statistic_p4 %>% 
+  rbind(pvalue_p4)
+
+saveRDS(test_results_p4, "tables/test_results_p4.RDS")
 
 
 

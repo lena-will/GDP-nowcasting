@@ -206,3 +206,5 @@ colnames(period4) <- names
 ## Save results ----------------------------------------------------------------
 
 no_google <- bind_rows(period1, period2, period3, period4)
+
+saveRDS(no_google, "tables/no_google.RDS")
